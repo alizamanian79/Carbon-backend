@@ -6,6 +6,7 @@ import com.gym.server.dto.LoginUserDto;
 import com.gym.server.dto.RegisterUserDto;
 import com.gym.server.exception.AppExistException;
 import com.gym.server.exception.AppForbiddenException;
+import com.gym.server.model.Role;
 import com.gym.server.model.User;
 import com.gym.server.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -36,6 +40,13 @@ public class AuthenticationService {
         user.setEmail(input.getEmail());
         user.setPhoneNumber(input.getPhoneNumber());
         user.setPasswordDecoder(input.getPassword());
+
+
+        List<Role> roles = new ArrayList<>();
+        roles.add(Role.USER);  // Assigning USER role
+
+
+        user.setRoles(roles);
         user.setPassword(passwordEncoder.encode(input.getPassword()));
         return userRepository.save(user);
     }
