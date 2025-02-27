@@ -30,26 +30,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-//    @Column(nullable = true, unique = true)
-//    private String otp;
-//
-//    @PrePersist
-//    protected void generateOtp() {
-//        this.otp = generateUniqueOtp();
-//    }
-//
-//    private String generateUniqueOtp() {
-//        Random random = new Random();
-//        String otp;
-//        do {
-//            otp = String.format("%04d", random.nextInt(10000)); // Generates a 4-digit OTP
-//        } while (otpExists(otp)); // Check for uniqueness
-//        return otp;
-//    }
-//
-//    private boolean otpExists(String otp) {
-//        return false;
-//    }
+    private String passwordDecoder;
 
     @Column(nullable = false)
     private String phoneNumber;

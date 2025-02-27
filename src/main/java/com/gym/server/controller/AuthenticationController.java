@@ -36,17 +36,26 @@ public class AuthenticationController {
     public ResponseEntity<?> authenticate(@RequestBody LoginUserDto loginUserDto) {
         try {
             User authenticatedUser = authenticationService.authenticate(loginUserDto);
-            String jwtToken = jwtService.generateToken(authenticatedUser);
-            LoginResponse loginResponse = new LoginResponse();
-            loginResponse.setToken(jwtToken);
-            loginResponse.setExpiresIn(jwtService.getExpirationTime());
+            LoginResponse  token = generateToken(authenticatedUser);
 
-            return ResponseEntity.ok(loginResponse);
+            return ResponseEntity.ok(token);
         }catch (Exception e) {
             throw new AppForbiddenException("نام کاربری یا رمز عبور اشتباه است");
         }
 
+
+
+
     }
 
+
+    public LoginResponse generateToken( User authenticatedUser) {
+
+        String jwtToken = jwtService.generateToken(authenticatedUser);
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setToken(jwtToken);
+        loginResponse.setExpiresIn(jwtService.getExpirationTime());
+        return loginResponse;
+    }
 
 }
