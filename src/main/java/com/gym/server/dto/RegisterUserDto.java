@@ -14,7 +14,7 @@ public class RegisterUserDto {
     private String password;
     private String fullName;
     private String phoneNumber;
-
+    private String passwordDecoder;
 
     
     // getters and setters here...
