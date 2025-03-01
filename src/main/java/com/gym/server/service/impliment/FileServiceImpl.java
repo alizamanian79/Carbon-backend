@@ -41,6 +41,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public void saveBase64ToFile(String base64, String fileName) {
         try {
+
             // Decode the Base64 string to bytes
             byte[] fileBytes = Base64.getDecoder().decode(base64);
 
@@ -69,6 +70,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public String showProfileBase64(String fileName) {
         try {
+
             // Define the file path
             String filePath = profileDir+"/"+fileName;
             File file = new File(filePath);
@@ -90,4 +92,19 @@ public class FileServiceImpl implements FileService {
             return "Error reading file: " + e.getMessage();
         }
     }
+
+    @Override
+    public String deleteProfileImage(String fileName) {
+        File file = new File(profileDir +"/"+ fileName);
+        if (file.exists()) {
+            if (file.delete()) {
+                return "File " + fileName + " deleted successfully.";
+            } else {
+                return "Failed to delete the file " + fileName + ".";
+            }
+        } else {
+            return "File " + fileName + " does not exist.";
+        }
+    }
+
 }

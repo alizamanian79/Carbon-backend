@@ -89,5 +89,14 @@ public class UserServiceImpl implements UserService {
         return "کاربر با موفقیت حذف شد";
     }
 
+    @Transactional
+    @Override
+    public String uploadProfile(Long id , String filename) {
+        User user = userRepository.findById(id).get();
+        user.setProfile(filename);
+        userRepository.save(user);
+        return "image updated successfully";
+    }
+
 
 }

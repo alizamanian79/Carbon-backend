@@ -26,6 +26,7 @@ security:
     expiration-time: 3600000 # 1h in milliseconds
 
 app:
+  ip: http://localhost:${server.port}
   path:
     profileImages: src/main/resources/static/uploads/profileImages
 

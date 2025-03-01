@@ -6,6 +6,7 @@ import com.gym.server.exception.AppForbiddenException;
 import com.gym.server.exception.AppNotFoundException;
 import com.gym.server.exception.AppSuccessfullException;
 import com.gym.server.model.User;
+import com.gym.server.repository.UserRepository;
 import com.gym.server.service.FileService;
 import com.gym.server.service.UserService;
 import lombok.AllArgsConstructor;
@@ -27,13 +28,22 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UserController {
 
+
+    @Value("${app.path.profileImages}")
+    private String profileImages;
+
+    @Value("${app.ip}")
+    private String serverIp;
+
     private final UserService userService;
     private final FileService fileService;
+    private final UserRepository userRepository;
 
     @GetMapping("/me")
     public ResponseEntity<User> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = (User) authentication.getPrincipal();
+        currentUser.setProfile(serverIp+"/api/v1/user/profile?image="+currentUser.getProfile());
         return ResponseEntity.ok(currentUser);
     }
 
@@ -76,7 +86,16 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PutMapping("/profile")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) authentication.getPrincipal();
+        if (currentUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         try {
+            if (currentUser.getProfile() != null) {
+                fileService.deleteProfileImage(currentUser.getProfile());
+            }
             // Convert the image to Base64
             String base64 = fileService.convertFileToBase64(file);
             // Save Base64 to directory
@@ -86,7 +105,17 @@ public class UserController {
             response.put("message","Image uploaded successfully");
             response.put("status","200");
             response.put("image",generateName);
-           return new ResponseEntity<>(response,HttpStatus.OK);
+
+            // save in profile db
+
+            userService.uploadProfile(currentUser.getId(),generateName);
+
+            String imageBase64 = fileService.showProfileBase64(response.get("image"));
+            Map<String,String> res = new HashMap<>();
+            res.put("base64",base64);
+//            return ResponseEntity.ok(res);
+
+           return new ResponseEntity<>(res,HttpStatus.OK);
         } catch (Exception e) {
         throw new AppNotFoundException(e.getMessage());
         }
@@ -95,9 +124,10 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
    @GetMapping("/profile")
-    public ResponseEntity<?> showImage(@RequestParam String profileImage) {
+    public ResponseEntity<?> showImage(@RequestParam String image) {
+
         try {
-           String base64 = fileService.showProfileBase64(profileImage);
+           String base64 = fileService.showProfileBase64(image);
            Map<String,String> res = new HashMap<>();
            res.put("base64",base64);
            return ResponseEntity.ok(res);

@@ -13,5 +13,5 @@ public interface UserService {
     User updateUser(User user);
     User setRole(RoleDto req);
     String deleteUser(Long id);
-//    String uploadImae(MultipartFile file);
+    String uploadProfile(Long id ,String filename);
 }

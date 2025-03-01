@@ -56,8 +56,8 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-
-
+    @Column(nullable = true)
+    private String profile;
 
     @Enumerated
     private List<Role> roles;
