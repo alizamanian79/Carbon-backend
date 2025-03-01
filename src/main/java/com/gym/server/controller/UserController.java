@@ -9,6 +9,9 @@ import com.gym.server.model.User;
 import com.gym.server.service.FileService;
 import com.gym.server.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,13 +20,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 
 @RequestMapping("/api/v1/user")
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserController {
+
     private final UserService userService;
     private final FileService fileService;
 
@@ -70,17 +73,39 @@ public class UserController {
         throw new AppSuccessfullException(res);
     }
 
-    @PostMapping("/upload/profile")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PutMapping("/profile")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) {
         try {
             // Convert the image to Base64
             String base64 = fileService.convertFileToBase64(file);
             // Save Base64 to directory
-           fileService.saveBase64ToFile(base64,"test.jpg");
-            throw new AppSuccessfullException("Image saved");
+            String generateName = UUID.randomUUID()+".jpg";
+          fileService.saveBase64ToFile(base64, generateName);
+            Map<String,String> response = new HashMap<String,String>();
+            response.put("message","Image uploaded successfully");
+            response.put("status","200");
+            response.put("image",generateName);
+           return new ResponseEntity<>(response,HttpStatus.OK);
         } catch (Exception e) {
         throw new AppNotFoundException(e.getMessage());
         }
     }
+
+
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
+   @GetMapping("/profile")
+    public ResponseEntity<?> showImage(@RequestParam String profileImage) {
+        try {
+           String base64 = fileService.showProfileBase64(profileImage);
+           Map<String,String> res = new HashMap<>();
+           res.put("base64",base64);
+           return ResponseEntity.ok(res);
+
+        } catch (Exception e) {
+            throw new AppNotFoundException(e.getMessage());
+        }
+    }
+
 
 }
