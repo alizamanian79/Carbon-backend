@@ -1,10 +1,13 @@
 package com.gym.server.controller;
 
 
+import com.gym.server.dto.RoleDto;
 import com.gym.server.exception.AppForbiddenException;
+import com.gym.server.exception.AppSuccessfullException;
 import com.gym.server.model.User;
 import com.gym.server.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -46,5 +49,22 @@ public class UserController {
         User users = userService.updateUser(user);
         return ResponseEntity.ok(users);
     }
+
+
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PutMapping("/role/set")
+    public ResponseEntity<User> setRole(@RequestBody RoleDto role) {
+        User users = userService.setRole(role);
+        return ResponseEntity.ok(users);
+    }
+
+
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> setRole(@PathVariable Long id) {
+        String res =userService.deleteUser(id);
+        throw new AppSuccessfullException(res);
+    }
+
 
 }

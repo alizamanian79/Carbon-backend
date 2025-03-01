@@ -47,4 +47,17 @@ public class AppExceptionHandler {
         return new ResponseEntity<>(appException, HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(value = {AppSuccessfullException.class})
+    public ResponseEntity<Object> handleAppSuccessfullException
+            (AppSuccessfullException appSuccessfullException)
+    {
+        AppException appException = new AppException(
+                appSuccessfullException.getMessage(),
+                appSuccessfullException.getCause(),
+                HttpStatus.OK
+        );
+
+        return new ResponseEntity<>(appException, HttpStatus.OK);
+    }
+
 }

@@ -64,7 +64,7 @@ public class OTPService {
             otpRepository.delete(exist.get());
             return ResponseEntity.ok(token);
         }
-        throw new AppNotFoundException("Invalid OTP Code");
+        throw new AppNotFoundException("کد نامعتبر میباشد");
     }
 
     @Transactional

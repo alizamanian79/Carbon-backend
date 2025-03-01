@@ -10,3 +10,5 @@ public class AppForbiddenException extends RuntimeException {
         super(message, cause);
     }
 }
+
+
