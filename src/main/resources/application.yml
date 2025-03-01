@@ -1,0 +1,31 @@
+server:
+  port: 8081
+
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  task:
+    scheduling:
+      enabled: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/testdb
+    username: root
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+security:
+  jwt:
+    secret-key: 5a3e8f1c2b4d6e7f8a9b0c1d2e3f4g5h6i7j8k9l0m1n2o3p4q5r6s7t8u9v0w1
+    expiration-time: 3600000 # 1h in milliseconds
+
+app:
+  path:
+    profileImages: src/main/resources/static/uploads/profileImages
+

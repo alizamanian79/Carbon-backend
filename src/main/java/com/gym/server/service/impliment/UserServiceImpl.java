@@ -7,8 +7,10 @@ import com.gym.server.exception.AppNotFoundException;
 import com.gym.server.model.User;
 import com.gym.server.repository.UserRepository;
 import com.gym.server.service.UserService;
+import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
+
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 

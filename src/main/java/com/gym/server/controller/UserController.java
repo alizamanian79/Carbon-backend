@@ -3,8 +3,10 @@ package com.gym.server.controller;
 
 import com.gym.server.dto.RoleDto;
 import com.gym.server.exception.AppForbiddenException;
+import com.gym.server.exception.AppNotFoundException;
 import com.gym.server.exception.AppSuccessfullException;
 import com.gym.server.model.User;
+import com.gym.server.service.FileService;
 import com.gym.server.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +15,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Base64;
 import java.util.List;
 
 @RequestMapping("/api/v1/user")
@@ -21,7 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
-
+    private final FileService fileService;
 
     @GetMapping("/me")
     public ResponseEntity<User> authenticatedUser() {
@@ -66,5 +70,17 @@ public class UserController {
         throw new AppSuccessfullException(res);
     }
 
+    @PostMapping("/upload/profile")
+    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) {
+        try {
+            // Convert the image to Base64
+            String base64 = fileService.convertFileToBase64(file);
+            // Save Base64 to directory
+           fileService.saveBase64ToFile(base64,"test.jpg");
+            throw new AppSuccessfullException("Image saved");
+        } catch (Exception e) {
+        throw new AppNotFoundException(e.getMessage());
+        }
+    }
 
 }
