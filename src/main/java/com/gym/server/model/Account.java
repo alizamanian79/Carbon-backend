@@ -1,5 +1,6 @@
 package com.gym.server.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -25,11 +26,11 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JsonIgnore
+    @JsonBackReference
     @OneToOne(mappedBy = "account")
     private User user;
 
-    private Double amount;
+    private Long amount;
 
 
     @CreationTimestamp
