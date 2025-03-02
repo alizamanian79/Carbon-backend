@@ -1,5 +1,6 @@
 package com.gym.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -47,6 +48,10 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String phoneNumber;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account account;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

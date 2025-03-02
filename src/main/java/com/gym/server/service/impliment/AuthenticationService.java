@@ -1,16 +1,15 @@
-package com.gym.server.service;
+package com.gym.server.service.impliment;
 
 
-import com.gym.server.dto.LoginResponse;
 import com.gym.server.dto.LoginUserDto;
 import com.gym.server.dto.RegisterUserDto;
 import com.gym.server.exception.AppExistException;
-import com.gym.server.exception.AppForbiddenException;
 import com.gym.server.model.Role;
 import com.gym.server.model.User;
 import com.gym.server.repository.UserRepository;
+import com.gym.server.service.AccountService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -28,8 +26,10 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final AccountService accountService;
 
 
+    @Transactional
     public User signup(RegisterUserDto input) {
         Optional<User> existUser =  userRepository.findByPhoneNumber(input.getPhoneNumber());
         if (existUser.isPresent()) {
@@ -48,7 +48,13 @@ public class AuthenticationService {
 
         user.setRoles(roles);
         user.setPassword(passwordEncoder.encode(input.getPassword()));
-        return userRepository.save(user);
+        User result = userRepository.save(user);
+
+
+        result.setAccount(accountService.createAccount(result.getId()));
+        userRepository.save(result);
+
+        return result;
     }
 
     public User authenticate(LoginUserDto input) {

@@ -1,7 +1,7 @@
 package com.gym.server.config;
 
 
-import com.gym.server.service.JwtService;
+import com.gym.server.service.impliment.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

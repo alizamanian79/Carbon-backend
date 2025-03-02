@@ -1,15 +1,12 @@
 package com.gym.server.controller;
 
 import com.gym.server.model.OTP;
-import com.gym.server.service.OTPService;
-import org.springframework.http.HttpStatus;
+import com.gym.server.service.impliment.OTPService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/otp")

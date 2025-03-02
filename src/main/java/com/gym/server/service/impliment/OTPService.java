@@ -1,4 +1,4 @@
-package com.gym.server.service;
+package com.gym.server.service.impliment;
 
 import com.gym.server.dto.LoginResponse;
 import com.gym.server.dto.LoginUserDto;
@@ -11,8 +11,6 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
