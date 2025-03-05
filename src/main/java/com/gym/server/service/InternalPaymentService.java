@@ -6,7 +6,7 @@ import com.gym.server.model.InternalPayment;
 
 import java.util.List;
 
-public interface InternalPaymentRepository {
+public interface InternalPaymentService {
     List<?> getAll();
     InternalPayment add(InternalPayment req);
     Course update();

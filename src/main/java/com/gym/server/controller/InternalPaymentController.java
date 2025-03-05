@@ -1,7 +1,6 @@
 package com.gym.server.controller;
 
 import com.gym.server.model.InternalPayment;
-import com.gym.server.service.InternalPaymentRepository;
 import com.gym.server.service.impliment.InternalPaymentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

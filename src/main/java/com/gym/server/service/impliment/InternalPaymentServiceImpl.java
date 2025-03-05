@@ -7,8 +7,9 @@ import com.gym.server.model.Course;
 import com.gym.server.model.InternalPayment;
 import com.gym.server.repository.AccountRepository;
 import com.gym.server.repository.CourseRepository;
+import com.gym.server.repository.InternalPaymentRepository;
 import com.gym.server.service.AccountService;
-import com.gym.server.service.InternalPaymentRepository;
+import com.gym.server.service.InternalPaymentService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,16 +26,16 @@ import java.util.stream.StreamSupport;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class InternalPaymentServiceImpl implements InternalPaymentRepository {
+public class InternalPaymentServiceImpl implements InternalPaymentService {
 
-    private final com.gym.server.repository.InternalPaymentRepository payFeesRepository;
+    private final InternalPaymentRepository internalPaymentRepository;
     private final AccountRepository accountRepository;
     private final AccountService accountService;
     private final CourseRepository feeRepository;
 
     @Override
     public List<InternalPayment> getAll() {
-        return StreamSupport.stream(payFeesRepository.findAll().spliterator(), false)
+        return StreamSupport.stream(internalPaymentRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
 
@@ -52,7 +53,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentRepository {
         payFees.setAmount(findCourse.get().getAmount() - ((findCourse.get().getAmount()) * findCourse.get().getDiscount() / 100));
         payFees.setStatus("pending");
         payFees.setTransactionId(UUID.randomUUID().toString());
-        return payFeesRepository.save(payFees);
+        return internalPaymentRepository.save(payFees);
     }
 
     @Override
@@ -81,7 +82,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentRepository {
     @Transactional
     @Override
     public InternalPayment successfullInternalPayment(Long id) {
-        Optional<InternalPayment> payFees = payFeesRepository.findById(id);
+        Optional<InternalPayment> payFees = internalPaymentRepository.findById(id);
         Optional<Account> account = accountRepository.findById(id);
         if (!payFees.isPresent()) {
             throw new AppNotFoundException("Pay fee not found");
@@ -105,7 +106,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentRepository {
             target.setStatus("Ok");
             target.setStartAt(LocalDateTime.now());
             target.setEndedAt(target.getStartAt().plusDays(30));
-            payFeesRepository.save(target);
+            internalPaymentRepository.save(target);
 
         }
 
@@ -120,7 +121,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentRepository {
     @Scheduled(cron = "0 0 0 * * ?") // Runs every day at midnight
     public void updateExpiredFees() {
         // Convert Iterable to List
-        List<InternalPayment> fees = StreamSupport.stream(payFeesRepository.findAll().spliterator(), false)
+        List<InternalPayment> fees = StreamSupport.stream(internalPaymentRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
 
         LocalDateTime now = LocalDateTime.now();
@@ -132,7 +133,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentRepository {
             }
         }
 
-        payFeesRepository.saveAll(fees); // Save all updated fees
+        internalPaymentRepository.saveAll(fees); // Save all updated fees
     }
 
 
