@@ -43,7 +43,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentRepository {
     public InternalPayment add(InternalPayment req) {
         Optional<Course> findCourse = feeRepository.findById(req.getCourseId());
         if (!findCourse.isPresent()) {
-            throw new AppNotFoundException("Fee not found");
+            throw new AppNotFoundException("دوره یافت نشد");
         }
         InternalPayment payFees = new InternalPayment();
         payFees.setAccountId(req.getAccountId());
@@ -97,7 +97,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentRepository {
         accountDto.setAmount(target.getAmount());
         Boolean checkAccount = accountService.deducationAccount(accountDto);
         if (checkAccount==false) {
-            throw new AppNotFoundException("وجودی کافی نمیباشد");
+            throw new AppNotFoundException("موجودی کافی نمیباشد");
         }
 
         // Only update if not expired
