@@ -5,6 +5,7 @@ import jakarta.persistence.*;
         import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,6 +15,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Table
 @Entity
 public class InternalPayment {
@@ -21,8 +23,15 @@ public class InternalPayment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long accountId;
-    private Long courseId;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account accountId;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course courseId;
+
     private Long coachId;
 
     private Long discount;

@@ -1,6 +1,7 @@
 package com.gym.server.service.impliment;
 
 import com.gym.server.dto.AccountDto;
+import com.gym.server.dto.InternalPayment.InternalPaymentDTO;
 import com.gym.server.exception.AppNotFoundException;
 import com.gym.server.model.Account;
 import com.gym.server.model.Course;
@@ -31,7 +32,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
     private final InternalPaymentRepository internalPaymentRepository;
     private final AccountRepository accountRepository;
     private final AccountService accountService;
-    private final CourseRepository feeRepository;
+    private final CourseRepository courseRepository;
 
     @Override
     public List<InternalPayment> getAll() {
@@ -41,19 +42,23 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
 
     @Override
-    public InternalPayment add(InternalPayment req) {
-        Optional<Course> findCourse = feeRepository.findById(req.getCourseId());
+    public InternalPayment add(InternalPaymentDTO req) {
+        Optional<Course> findCourse = courseRepository.findById(req.getCourseId());
+        Optional<Account> findAccount = accountRepository.findById(req.getAccountId());
         if (!findCourse.isPresent()) {
             throw new AppNotFoundException("دوره یافت نشد");
         }
-        InternalPayment payFees = new InternalPayment();
-        payFees.setAccountId(req.getAccountId());
-        payFees.setCourseId(req.getCourseId());
-        payFees.setDiscount(req.getDiscount());
-        payFees.setAmount(findCourse.get().getAmount() - ((findCourse.get().getAmount()) * findCourse.get().getDiscount() / 100));
-        payFees.setStatus("pending");
-        payFees.setTransactionId(UUID.randomUUID().toString());
-        return internalPaymentRepository.save(payFees);
+        InternalPayment payment = new InternalPayment();
+        payment.setAccountId(findAccount.get());
+        payment.setCourseId(findCourse.get());
+
+
+        payment.setDiscount(findCourse.get().getDiscount());
+
+        payment.setAmount(findCourse.get().getAmount() - ((findCourse.get().getAmount()) * findCourse.get().getDiscount() / 100));
+        payment.setStatus("pending");
+        payment.setTransactionId(UUID.randomUUID().toString());
+        return internalPaymentRepository.save(payment);
     }
 
     @Override
@@ -82,17 +87,17 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
     @Transactional
     @Override
     public InternalPayment successfullInternalPayment(Long id) {
-        Optional<InternalPayment> payFees = internalPaymentRepository.findById(id);
-        Optional<Account> account = accountRepository.findById(id);
-        if (!payFees.isPresent()) {
+        Optional<InternalPayment> findPayment = internalPaymentRepository.findById(id);
+//        Optional<Account> account = accountRepository.findById(id);
+        if (!findPayment.isPresent()) {
             throw new AppNotFoundException("Pay fee not found");
         }
 
 
-        InternalPayment target = payFees.get();
+        InternalPayment target = findPayment.get();
 
 
-        Optional<Account> userAccount = accountRepository.findById(target.getAccountId());
+        Optional<Account> userAccount = accountRepository.findById(target.getAccountId().getId());
         AccountDto accountDto = new AccountDto();
         accountDto.setId(userAccount.get().getId());
         accountDto.setAmount(target.getAmount());
@@ -110,7 +115,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
         }
 
-        return payFees.get();
+        return target;
     }
 
 

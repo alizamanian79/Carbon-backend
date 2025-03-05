@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import java.util.Date;
 
 @Data
@@ -24,7 +23,6 @@ public class Course {
     private Long sessions;
     private Long amount;
     private Long discount;
-
 
     @CreationTimestamp
     private Date createdAt;

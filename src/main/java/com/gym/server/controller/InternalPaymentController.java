@@ -1,5 +1,6 @@
 package com.gym.server.controller;
 
+import com.gym.server.dto.InternalPayment.InternalPaymentDTO;
 import com.gym.server.model.InternalPayment;
 import com.gym.server.service.impliment.InternalPaymentServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +32,9 @@ public class InternalPaymentController {
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping
-    public ResponseEntity<?> add(@RequestBody InternalPayment payFees){
+    public ResponseEntity<?> add(@RequestBody InternalPaymentDTO req){
         try {
-            return new ResponseEntity<>(internalPaymentService.add(payFees), HttpStatus.OK);
+            return new ResponseEntity<>(internalPaymentService.add(req), HttpStatus.OK);
         }catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

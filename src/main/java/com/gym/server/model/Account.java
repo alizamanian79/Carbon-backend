@@ -12,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -31,6 +33,7 @@ public class Account {
     private User user;
 
     private Long amount;
+
 
 
     @CreationTimestamp
