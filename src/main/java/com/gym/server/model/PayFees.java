@@ -1,12 +1,14 @@
+
 package com.gym.server.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+        import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -14,17 +16,20 @@ import java.util.Date;
 @NoArgsConstructor
 @Table
 @Entity
-public class Fee {
+public class PayFees {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String title;
-    private String description;
-    private Long sessions;
-    private Long amount;
+    private Long accountId;
+    private Long feeId;
     private Long discount;
+    private Long amount;
+    private String status;
+    private String transactionId;
 
+    private LocalDateTime startAt;
+    private LocalDateTime endedAt;
 
     @CreationTimestamp
     private Date createdAt;
@@ -32,7 +37,3 @@ public class Fee {
     @UpdateTimestamp
     private Date updatedAt;
 }
-
-
-
-

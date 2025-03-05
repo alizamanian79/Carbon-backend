@@ -10,6 +10,6 @@ public interface AccountService {
     List<Account> getAccounts();
     Account createAccount(Long id);
     ResponseEntity<?> chargeAccount(AccountDto accountDto);
-    ResponseEntity<?> deducationAccount(AccountDto accountDto);
+    Boolean deducationAccount(AccountDto accountDto);
 
 }

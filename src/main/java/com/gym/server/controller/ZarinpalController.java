@@ -18,7 +18,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/payment")
+@RequestMapping("/api/v1/zarinpal/payment")
 public class ZarinpalController {
 
     @Value("${app.zarinpal.paymentUrl}")

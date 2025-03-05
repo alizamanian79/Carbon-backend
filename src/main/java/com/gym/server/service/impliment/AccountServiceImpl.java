@@ -73,7 +73,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ResponseEntity<?> deducationAccount(AccountDto accountDto) {
+    public Boolean deducationAccount(AccountDto accountDto) {
         Optional<User> existUser = userRepository.findById(accountDto.getId());
         if (!existUser.isPresent()) {
             throw new AppNotFoundException("کاربر پیدا نشد");
@@ -89,20 +89,20 @@ public class AccountServiceImpl implements AccountService {
         // Update the account amount
         Map<String,String> res = new HashMap<>();
         if (account.getAmount() - accountDto.getAmount() < 0) {
-            res.put("message","موجودی حساب شما برای این تراکنش کافی نمیباشد از لینک زیر برای شارژ حساب خود استفاده کنید");
-            res.put("AccountAmount",account.getAmount().toString());
-            res.put("url","/charge");
-           return new ResponseEntity<>(res,HttpStatus.OK) ;
+//            res.put("message","موجودی حساب شما برای این تراکنش کافی نمیباشد از لینک زیر برای شارژ حساب خود استفاده کنید");
+//            res.put("AccountAmount",account.getAmount().toString());
+//            res.put("url","/charge");
+           return false ;
         }
         account.setAmount(account.getAmount() - accountDto.getAmount());
 
         // Save the updated account
         accountRepository.save(account);
-        res.put("message", "حساب شما مبلغ"+ accountDto.getAmount()+"کسر شد");
-        res.put("AccountAmount",account.getAmount().toString());
+//        res.put("message", "حساب شما مبلغ"+ accountDto.getAmount()+"کسر شد");
+//        res.put("AccountAmount",account.getAmount().toString());
 
 
-        return new ResponseEntity<>(res,HttpStatus.OK);
+        return true;
     }
 
 
