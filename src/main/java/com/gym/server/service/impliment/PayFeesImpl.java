@@ -3,10 +3,10 @@ package com.gym.server.service.impliment;
 import com.gym.server.dto.AccountDto;
 import com.gym.server.exception.AppNotFoundException;
 import com.gym.server.model.Account;
-import com.gym.server.model.Fee;
+import com.gym.server.model.Course;
 import com.gym.server.model.PayFees;
 import com.gym.server.repository.AccountRepository;
-import com.gym.server.repository.FeeRepository;
+import com.gym.server.repository.CourseRepository;
 import com.gym.server.repository.PayFeesRepository;
 import com.gym.server.service.AccountService;
 import com.gym.server.service.PayFeesService;
@@ -31,7 +31,7 @@ public class PayFeesImpl implements PayFeesService {
     private final PayFeesRepository payFeesRepository;
     private final AccountRepository accountRepository;
     private final AccountService accountService;
-    private final FeeRepository feeRepository;
+    private final CourseRepository feeRepository;
 
     @Override
     public List<PayFees> getAll() {
@@ -42,7 +42,7 @@ public class PayFeesImpl implements PayFeesService {
 
     @Override
     public PayFees add(PayFees req) {
-        Optional<Fee> findFee = feeRepository.findById(req.getFeeId());
+        Optional<Course> findFee = feeRepository.findById(req.getFeeId());
         if (!findFee.isPresent()) {
             throw new AppNotFoundException("Fee not found");
         }
@@ -57,7 +57,7 @@ public class PayFeesImpl implements PayFeesService {
     }
 
     @Override
-    public Fee update() {
+    public Course update() {
         // Implement update logic or remove if not needed
         return null;
     }
@@ -69,7 +69,7 @@ public class PayFeesImpl implements PayFeesService {
     }
 
     @Override
-    public Fee retriveFee() {
+    public Course retriveFee() {
         // Implement retrieve logic or remove if not needed
         return null;
     }

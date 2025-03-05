@@ -1,24 +1,21 @@
 package com.gym.server.controller;
 
-import com.gym.server.model.Fee;
-import com.gym.server.service.FeeService;
+import com.gym.server.model.Course;
+import com.gym.server.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/v1/fee")
-public class FeeController {
+@RequestMapping("/api/v1/course")
+public class CourseController {
 
-    private final FeeService feeService;
+    private final CourseService feeService;
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping
@@ -29,7 +26,7 @@ public class FeeController {
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping
-    public ResponseEntity<?> addFee(@RequestBody Fee req) {
+    public ResponseEntity<?> addFee(@RequestBody Course req) {
         try {
             return new ResponseEntity<>(feeService.addFee(req), HttpStatus.OK);
         }
@@ -40,7 +37,7 @@ public class FeeController {
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PutMapping
-    public ResponseEntity<?> updateFee(@RequestBody Fee req) {
+    public ResponseEntity<?> updateFee(@RequestBody Course req) {
         try {
             return new ResponseEntity<>(feeService.updateFee(req), HttpStatus.OK);
         }

@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Table
 @Entity
-public class Fee {
+public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

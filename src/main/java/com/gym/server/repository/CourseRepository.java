@@ -1,9 +1,9 @@
 package com.gym.server.repository;
 
-import com.gym.server.model.Fee;
+import com.gym.server.model.Course;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FeeRepository extends CrudRepository<Fee, Long> {
+public interface CourseRepository extends CrudRepository<Course, Long> {
 }
