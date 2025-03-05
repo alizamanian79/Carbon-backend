@@ -28,7 +28,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course addFee(Course req) {
+    public Course add(Course req) {
         Course fee = new Course();
         fee.setTitle(req.getTitle());
         fee.setDescription(req.getDescription());
@@ -40,7 +40,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public Course updateFee(Course req) {
+    public Course update(Course req) {
         Course existFee = courseRepository.findById(req.getId()).orElseThrow(() -> new NoSuchElementException("Not found"));
         existFee.setTitle(req.getTitle());
         existFee.setDescription(req.getDescription());
@@ -52,14 +52,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public String deleteFee(Long id) {
+    public String delete(Long id) {
         Course existFee = courseRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Not found"));
         courseRepository.delete(existFee);
         return "دوره حذف گردید";
     }
 
     @Override
-    public Course retriveFee(Long id) {
+    public Course retrieve(Long id) {
         Course existFee = courseRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Not found"));
         return existFee;
     }

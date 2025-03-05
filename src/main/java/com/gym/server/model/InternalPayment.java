@@ -16,13 +16,15 @@ import java.util.Date;
 @NoArgsConstructor
 @Table
 @Entity
-public class PayFees {
+public class InternalPayment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private Long accountId;
-    private Long feeId;
+    private Long courseId;
+    private Long coachId;
+
     private Long discount;
     private Long amount;
     private String status;

@@ -4,12 +4,11 @@ import com.gym.server.dto.AccountDto;
 import com.gym.server.exception.AppNotFoundException;
 import com.gym.server.model.Account;
 import com.gym.server.model.Course;
-import com.gym.server.model.PayFees;
+import com.gym.server.model.InternalPayment;
 import com.gym.server.repository.AccountRepository;
 import com.gym.server.repository.CourseRepository;
-import com.gym.server.repository.PayFeesRepository;
 import com.gym.server.service.AccountService;
-import com.gym.server.service.PayFeesService;
+import com.gym.server.service.InternalPaymentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,31 +25,31 @@ import java.util.stream.StreamSupport;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class PayFeesImpl implements PayFeesService {
+public class InternalPaymentServiceImpl implements InternalPaymentRepository {
 
-    private final PayFeesRepository payFeesRepository;
+    private final com.gym.server.repository.InternalPaymentRepository payFeesRepository;
     private final AccountRepository accountRepository;
     private final AccountService accountService;
     private final CourseRepository feeRepository;
 
     @Override
-    public List<PayFees> getAll() {
+    public List<InternalPayment> getAll() {
         return StreamSupport.stream(payFeesRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
 
 
     @Override
-    public PayFees add(PayFees req) {
-        Optional<Course> findFee = feeRepository.findById(req.getFeeId());
-        if (!findFee.isPresent()) {
+    public InternalPayment add(InternalPayment req) {
+        Optional<Course> findCourse = feeRepository.findById(req.getCourseId());
+        if (!findCourse.isPresent()) {
             throw new AppNotFoundException("Fee not found");
         }
-        PayFees payFees = new PayFees();
+        InternalPayment payFees = new InternalPayment();
         payFees.setAccountId(req.getAccountId());
-        payFees.setFeeId(req.getFeeId());
+        payFees.setCourseId(req.getCourseId());
         payFees.setDiscount(req.getDiscount());
-        payFees.setAmount(findFee.get().getAmount() - ((findFee.get().getAmount()) * findFee.get().getDiscount() / 100));
+        payFees.setAmount(findCourse.get().getAmount() - ((findCourse.get().getAmount()) * findCourse.get().getDiscount() / 100));
         payFees.setStatus("pending");
         payFees.setTransactionId(UUID.randomUUID().toString());
         return payFeesRepository.save(payFees);
@@ -69,10 +68,11 @@ public class PayFeesImpl implements PayFeesService {
     }
 
     @Override
-    public Course retriveFee() {
-        // Implement retrieve logic or remove if not needed
+    public Course retrieve(String id) {
         return null;
     }
+
+
 
 
     //Main
@@ -80,15 +80,15 @@ public class PayFeesImpl implements PayFeesService {
 
     @Transactional
     @Override
-    public PayFees successBuyFees(Long id) {
-        Optional<PayFees> payFees = payFeesRepository.findById(id);
+    public InternalPayment successfullInternalPayment(Long id) {
+        Optional<InternalPayment> payFees = payFeesRepository.findById(id);
         Optional<Account> account = accountRepository.findById(id);
         if (!payFees.isPresent()) {
             throw new AppNotFoundException("Pay fee not found");
         }
 
 
-        PayFees target = payFees.get();
+        InternalPayment target = payFees.get();
 
 
         Optional<Account> userAccount = accountRepository.findById(target.getAccountId());
@@ -120,12 +120,12 @@ public class PayFeesImpl implements PayFeesService {
     @Scheduled(cron = "0 0 0 * * ?") // Runs every day at midnight
     public void updateExpiredFees() {
         // Convert Iterable to List
-        List<PayFees> fees = StreamSupport.stream(payFeesRepository.findAll().spliterator(), false)
+        List<InternalPayment> fees = StreamSupport.stream(payFeesRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
 
         LocalDateTime now = LocalDateTime.now();
 
-        for (PayFees fee : fees) {
+        for (InternalPayment fee : fees) {
             // Check if endedAt is not null before comparing
             if (fee.getEndedAt() != null && now.isAfter(fee.getEndedAt())) {
                 fee.setStatus("expired");

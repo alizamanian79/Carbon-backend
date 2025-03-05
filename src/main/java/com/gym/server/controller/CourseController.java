@@ -19,16 +19,16 @@ public class CourseController {
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping
-    public ResponseEntity<?> getAllFees() {
+    public ResponseEntity<?> getAll() {
         return new ResponseEntity<>(feeService.getAll(), HttpStatus.OK);
     }
 
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping
-    public ResponseEntity<?> addFee(@RequestBody Course req) {
+    public ResponseEntity<?> add(@RequestBody Course req) {
         try {
-            return new ResponseEntity<>(feeService.addFee(req), HttpStatus.OK);
+            return new ResponseEntity<>(feeService.add(req), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -37,9 +37,9 @@ public class CourseController {
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PutMapping
-    public ResponseEntity<?> updateFee(@RequestBody Course req) {
+    public ResponseEntity<?> update(@RequestBody Course req) {
         try {
-            return new ResponseEntity<>(feeService.updateFee(req), HttpStatus.OK);
+            return new ResponseEntity<>(feeService.update(req), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -49,9 +49,9 @@ public class CourseController {
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteFee(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
-            return new ResponseEntity<>(feeService.deleteFee(id), HttpStatus.OK);
+            return new ResponseEntity<>(feeService.delete(id), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -60,9 +60,9 @@ public class CourseController {
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping("/{id}")
-    public ResponseEntity<?> retriveFee(@PathVariable Long id) {
+    public ResponseEntity<?> retrieve(@PathVariable Long id) {
         try {
-            return new ResponseEntity<>(feeService.retriveFee(id), HttpStatus.OK);
+            return new ResponseEntity<>(feeService.retrieve(id), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
