@@ -37,6 +37,7 @@ public class InternalPayment {
     private Long discount;
     private Long amount;
     private String status;
+
     private String transactionId;
 
     private LocalDateTime startAt;

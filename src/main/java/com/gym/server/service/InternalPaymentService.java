@@ -6,6 +6,7 @@ import com.gym.server.model.Course;
 import com.gym.server.model.InternalPayment;
 
 import java.util.List;
+import java.util.Map;
 
 public interface InternalPaymentService {
     List<?> getAll();
@@ -17,5 +18,5 @@ public interface InternalPaymentService {
 
     // main
     InternalPayment successfullInternalPayment(Long id);
-
+    InternalPayment callBack(String transactionId , String response);
 }

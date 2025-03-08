@@ -65,7 +65,9 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
         payment.setAmount(findCourse.get().getAmount() - ((findCourse.get().getAmount()) * findCourse.get().getDiscount() / 100));
         payment.setStatus("pending");
-        payment.setTransactionId(UUID.randomUUID().toString());
+
+        String code = String.valueOf(new Random().nextInt(90000) + 10000); // ۶ رقمی
+        payment.setTransactionId(code);
         return internalPaymentRepository.save(payment);
     }
 
@@ -130,6 +132,32 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
         return target;
     }
 
+    @Transactional
+    @Override
+    public InternalPayment callBack(String transactionId, String response) {
+        // Find the payment record by transaction ID
+        Optional<InternalPayment> optionalPayment = internalPaymentRepository.findByTransactionId(transactionId);
+
+        // Check if the payment record exists
+        if (optionalPayment.isPresent()) {
+            var find = optionalPayment.get();
+
+            // Check API response
+            if (response.equals("ok")) {
+                find.setStatus("ok");
+                internalPaymentRepository.save(find); // Ensure to save the updated entity
+                return find; // Return the updated payment
+            } else {
+                // Handle other response cases if necessary
+                find.setStatus("pending"); // Example status for other responses
+                internalPaymentRepository.save(find); // Save the updated entity
+                return find; // Return the updated payment
+            }
+        } else {
+            // Handle the case where the payment is not found
+            throw new AppNotFoundException("پیدا نشد");
+        }
+    }
 
 
 

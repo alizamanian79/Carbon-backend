@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -92,5 +93,22 @@ public class InternalPaymentController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+
+
+
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @GetMapping("/callback/{transactionId}")
+    public ResponseEntity<?> callBack(@PathVariable String transactionId){
+        try {
+           InternalPayment res =  internalPaymentService.callBack(transactionId,"hghghj");
+            return new ResponseEntity<>(res, HttpStatus.OK);
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }
