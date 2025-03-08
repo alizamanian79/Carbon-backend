@@ -50,16 +50,14 @@ public class InternalPaymentController {
 
 
 
+
+
     @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @PostMapping("/{id}")
-    public ResponseEntity<?> successPay(@PathVariable Long id){
-        try {
-            return new ResponseEntity<>(internalPaymentService.successfullInternalPayment(id), HttpStatus.OK);
-        }catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping("/{accountId}/list")
+    public ResponseEntity<?> listPayments(@PathVariable Long accountId){
+        return new ResponseEntity<>(internalPaymentService.retrieve(accountId), HttpStatus.OK);
     }
+
 
 
 
@@ -79,6 +77,19 @@ public class InternalPaymentController {
             if ("pending".equals(payment.getStatus())) {  // Corrected the method call
                 internalPaymentRepository.deleteById(payment.getId());
             }
+        }
+    }
+
+
+
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PostMapping("/{id}")
+    public ResponseEntity<?> successPay(@PathVariable Long id){
+        try {
+            return new ResponseEntity<>(internalPaymentService.successfullInternalPayment(id), HttpStatus.OK);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

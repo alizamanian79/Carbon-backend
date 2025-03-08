@@ -86,8 +86,8 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
     }
 
     @Override
-    public Course retrieve(String id) {
-        return null;
+    public Iterable<?> retrieve(Long accountId) {
+       return internalPaymentRepository.findByAccountId_Id(accountId);
     }
 
 

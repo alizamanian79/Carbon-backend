@@ -12,7 +12,7 @@ public interface InternalPaymentService {
     InternalPayment add(InternalPaymentDTO req);
     Course update();
     String delete(Long id);
-    Course retrieve(String id);
+    Iterable<?> retrieve(Long accountId);
 
 
     // main
