@@ -57,8 +57,9 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // Specify allowed origins
-        configuration.setAllowedOrigins(List.of("http://localhost:8081"));
+        configuration.setAllowedOrigins(List.of("http://localhost"));
         configuration.setAllowedOrigins(List.of("https://sandbox.zarinpal.com"));
+
 
 
         // Specify allowed HTTP methods
