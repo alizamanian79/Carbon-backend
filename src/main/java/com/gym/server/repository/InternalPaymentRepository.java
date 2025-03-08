@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InternalPaymentRepository extends CrudRepository<InternalPayment, Long> {
+
 }

@@ -11,7 +11,7 @@ public interface InternalPaymentService {
     List<?> getAll();
     InternalPayment add(InternalPaymentDTO req);
     Course update();
-    String delete();
+    String delete(Long id);
     Course retrieve(String id);
 
 

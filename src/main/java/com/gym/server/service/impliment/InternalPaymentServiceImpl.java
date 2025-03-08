@@ -43,11 +43,19 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
     @Override
     public InternalPayment add(InternalPaymentDTO req) {
+
+
         Optional<Course> findCourse = courseRepository.findById(req.getCourseId());
         Optional<Account> findAccount = accountRepository.findById(req.getAccountId());
+
         if (!findCourse.isPresent()) {
             throw new AppNotFoundException("دوره یافت نشد");
         }
+
+
+        if (findAccount.get().getAmount() - findCourse.get().getAmount() < 0) {
+        throw new AppNotFoundException("موجودی شما برای خرید دوره کافی نمیباشد");}
+
         InternalPayment payment = new InternalPayment();
         payment.setAccountId(findAccount.get());
         payment.setCourseId(findCourse.get());
@@ -68,9 +76,13 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
     }
 
     @Override
-    public String delete() {
-        // Implement delete logic or remove if not needed
-        return "Not implemented";
+    public String delete(Long id) {
+        Optional<InternalPayment> findInternalPayment = internalPaymentRepository.findById(id);
+        if (!findInternalPayment.isPresent()) {
+            throw new AppNotFoundException("دوره درون برنامه پیدا نشد");
+        }
+        internalPaymentRepository.deleteById(id);
+        return "برنامه حذف شد";
     }
 
     @Override
