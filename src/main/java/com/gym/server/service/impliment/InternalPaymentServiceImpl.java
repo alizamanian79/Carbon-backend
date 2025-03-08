@@ -92,7 +92,14 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
        return internalPaymentRepository.findByAccountId_Id(accountId);
     }
 
-
+    @Override
+    public InternalPayment getById(Long id) {
+       Optional<InternalPayment> find =  internalPaymentRepository.findById(id);
+       if (!find.isPresent()) {
+           throw new AppNotFoundException("Not found");
+       }
+       return find.get();
+    }
 
 
     //Main
@@ -143,8 +150,8 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
             var find = optionalPayment.get();
 
             // Check API response
-            if (response.equals("ok")) {
-                find.setStatus("ok");
+            if (response.equals("OK")) {
+                find.setStatus("OK");
                 internalPaymentRepository.save(find); // Ensure to save the updated entity
                 return find; // Return the updated payment
             } else {

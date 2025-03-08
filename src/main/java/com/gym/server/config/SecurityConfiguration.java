@@ -38,7 +38,7 @@ public class SecurityConfiguration {
                 .cors() // Enable CORS
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**", "/api/otp/**")
+                .requestMatchers("/api/v1/auth/**", "/api/otp/**","/api/v1/internalpayment/callback/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -58,6 +58,9 @@ public class SecurityConfiguration {
 
         // Specify allowed origins
         configuration.setAllowedOrigins(List.of("http://localhost:8081"));
+        configuration.setAllowedOrigins(List.of("https://sandbox.zarinpal.com"));
+
+
         // Specify allowed HTTP methods
         configuration.setAllowedMethods(List.of("GET", "POST"));
         // Specify allowed headers

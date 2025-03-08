@@ -31,6 +31,9 @@ public class ZarinpalServiceImpl implements ZarinpalService {
     @Value("${app.zarinpal.paymentEndpoint}")
     private String paymentEndpoint;
 
+    @Value("${app.zarinpal.merchantId}")
+    private String merchantId;
+
     @Value("${app.zarinpal.paymentUrl}")
     private String paymentUrl;
 
@@ -82,13 +85,13 @@ public class ZarinpalServiceImpl implements ZarinpalService {
 
 
     @Override
-    public PaymentResponseDto paymentRequest(RequestDto request) {
+    public PaymentResponseDto paymentRequest(RequestDto request,String callBack) {
 
-
+//        myapp.com?Authority=S000000000000000000000000000000678mo&Status=NOK
         PaymentRequestDto customPayment = new PaymentRequestDto();
-        customPayment.setMerchant_id("7d0f5d8b-bc21-4d0b-ad94-45b591aab2a2");
+        customPayment.setMerchant_id(merchantId);
         customPayment.setAmount(request.getAmount());
-        customPayment.setCallback_url("https:/google.com");
+        customPayment.setCallback_url(callBack);
         customPayment.setDescription("Transaction description.");
         //MetaData
         MetadataDto metadata = new MetadataDto();

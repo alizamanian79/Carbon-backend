@@ -8,6 +8,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.Map;
 
 public interface ZarinpalService {
-    PaymentResponseDto paymentRequest(RequestDto requestDto);
+    PaymentResponseDto paymentRequest(RequestDto requestDto , String callBack);
     void verifyRequest();
 }

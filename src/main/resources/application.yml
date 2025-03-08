@@ -30,6 +30,6 @@ app:
   path:
     profileImages: src/main/resources/static/uploads/profileImages
   zarinpal:
-    merchantId: 7d0f5d8b-bc21-4d0b-ad94-
+    merchantId: 7d0f5d8b-bc21-4d0b-ad94-45b591aab2a2
     paymentEndpoint: https://sandbox.zarinpal.com/pg/v4/payment/request.json #Post
     paymentUrl: https://sandbox.zarinpal.com/pg/StartPay #Get

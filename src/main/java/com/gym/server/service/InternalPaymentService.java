@@ -15,6 +15,7 @@ public interface InternalPaymentService {
     String delete(Long id);
     Iterable<?> retrieve(Long accountId);
 
+    InternalPayment getById(Long id);
 
     // main
     InternalPayment successfullInternalPayment(Long id);

@@ -28,10 +28,10 @@ public class ZarinpalController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
-    public ResponseEntity<?> pay(@RequestBody RequestDto req) {
+    public ResponseEntity<?> payment(@RequestBody RequestDto req) {
 
 //        return new ResponseEntity<>(paymentRequestDto, HttpStatus.OK);
-      PaymentResponseDto response= zarinpalService.paymentRequest(req);
+      PaymentResponseDto response= zarinpalService.paymentRequest(req,"http://alizamanianapp.com");
         String link = paymentUrl+"/"+response.getData().getAuthority().toString();
         return new ResponseEntity<>(link, HttpStatus.OK);
     }
