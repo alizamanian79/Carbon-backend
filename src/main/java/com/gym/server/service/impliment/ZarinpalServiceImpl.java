@@ -6,6 +6,8 @@ import com.gym.server.dto.Zarinpal.MetadataDto;
 import com.gym.server.dto.Zarinpal.PaymentRequestDto;
 import com.gym.server.dto.Zarinpal.PaymentResponseDto;
 import com.gym.server.dto.Zarinpal.RequestDto;
+import com.gym.server.dto.Zarinpal.verify.VerifyReqDto;
+import com.gym.server.dto.Zarinpal.verify.VerifyResDto;
 import com.gym.server.exception.AppNotFoundException;
 import com.gym.server.service.ZarinpalService;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +38,9 @@ public class ZarinpalServiceImpl implements ZarinpalService {
 
     @Value("${app.zarinpal.paymentUrl}")
     private String paymentUrl;
+
+    @Value("${app.zarinpal.verifyUrl}")
+    private String verifyUrl;
 
 
     @Autowired
@@ -129,10 +134,37 @@ public class ZarinpalServiceImpl implements ZarinpalService {
 
     }
 
-
-
     @Override
-    public void verifyRequest() {
+    public VerifyResDto verify(VerifyReqDto req) {
+        VerifyReqDto verifyReqDto = new VerifyReqDto();
+        verifyReqDto.setMerchant_id(merchantId);
+        verifyReqDto.setAmount(req.getAmount());
+        verifyReqDto.setAuthority(req.getAuthority());
+
+
+        // Set headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("Accept", "application/json");
+
+        // Create the request entity
+        HttpEntity<?> requestEntity = new HttpEntity<>(verifyReqDto, headers);
+
+        String url =verifyUrl;
+        // Make the request
+        ResponseEntity<VerifyResDto> responseEntity = restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                requestEntity,
+                VerifyResDto.class
+        );
+
+        VerifyResDto res = responseEntity.getBody();
+
+        return res;
 
     }
+
+
+
 }
