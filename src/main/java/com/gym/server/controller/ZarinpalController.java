@@ -26,6 +26,11 @@ public class ZarinpalController {
     @Value("${app.zarinpal.paymentUrl}")
     private String paymentUrl;
 
+
+    @Value("${app.zarinpal.redirectUrl}")
+    private String redirectUrl;
+
+
     private final ZarinpalService zarinpalService;
 
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -33,7 +38,7 @@ public class ZarinpalController {
     public ResponseEntity<?> payment(@RequestBody RequestDto req) {
 
 //        return new ResponseEntity<>(paymentRequestDto, HttpStatus.OK);
-      PaymentResponseDto response= zarinpalService.paymentRequest(req,"http://alizamanianapp.com");
+      PaymentResponseDto response= zarinpalService.paymentRequest(req,redirectUrl,"شارژ حساب");
         String link = paymentUrl+"/"+response.getData().getAuthority().toString();
         return new ResponseEntity<>(link, HttpStatus.OK);
     }
@@ -42,8 +47,8 @@ public class ZarinpalController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/verify")
     public ResponseEntity<?> verify(@RequestBody VerifyReqDto req) {
-    VerifyResDto res = zarinpalService.verify(req);
-        if (res.getData().getCode()==100){
+    boolean res = zarinpalService.verify(req);
+        if (res==true){
             return new ResponseEntity<>("this transaction has valid", HttpStatus.OK);
         }
         return new ResponseEntity<>("this transaction has not real", HttpStatus.BAD_REQUEST);

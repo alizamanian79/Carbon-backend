@@ -1,5 +1,10 @@
 package com.gym.server.controller;
 
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import com.gym.server.exception.AppForbiddenException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
 
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping("/user")
     public String userAccess() {
         try {
@@ -23,7 +27,6 @@ public class DemoController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/admin")
     public String adminAccess() {
         try {
@@ -33,5 +36,13 @@ public class DemoController {
         }
 
     }
+
+
+    @GetMapping("/hello")
+    public String hello(Model model) {
+        model.addAttribute("message", "سلام، خوش آمدید!");
+        return "hello"; // نام فایل HTML بدون پسوند
+    }
+
 
 }

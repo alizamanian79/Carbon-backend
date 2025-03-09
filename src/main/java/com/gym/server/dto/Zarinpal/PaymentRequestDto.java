@@ -15,4 +15,5 @@ public class PaymentRequestDto {
     private String callback_url;
     private String description;
     private MetadataDto metadata;
+    private String currency;
 }

@@ -20,4 +20,5 @@ public interface InternalPaymentService {
     // main
     InternalPayment successfullInternalPayment(Long id);
     InternalPayment callBack(String transactionId , String response);
+    InternalPayment getByTransactionId(String transactionId);
 }

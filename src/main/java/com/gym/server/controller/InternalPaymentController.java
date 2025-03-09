@@ -1,8 +1,14 @@
 package com.gym.server.controller;
 
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.gym.server.dto.InternalPayment.InternalPaymentDTO;
 import com.gym.server.dto.Zarinpal.PaymentResponseDto;
 import com.gym.server.dto.Zarinpal.RequestDto;
+import com.gym.server.dto.Zarinpal.verify.VerifyReqDto;
+import com.gym.server.dto.Zarinpal.verify.VerifyResDto;
 import com.gym.server.model.InternalPayment;
 import com.gym.server.repository.InternalPaymentRepository;
 import com.gym.server.repository.UserRepository;
@@ -26,14 +32,21 @@ import java.util.Map;
 @RequestMapping("/api/v1/internalpayment")
 public class InternalPaymentController {
 
-
-    private final UserRepository userRepository;
     @Value("${app.zarinpal.paymentUrl}")
     private String paymentUrl;
 
 
     @Value("${app.ip}")
     private String serverIp;
+
+
+    @Value("${app.zarinpal.redirectUrl}")
+    private String redirectUrl;
+
+
+
+    private final UserRepository userRepository;
+
 
 
     private final InternalPaymentServiceImpl internalPaymentService;
@@ -99,20 +112,6 @@ public class InternalPaymentController {
 
 
 
-//    @PreAuthorize("hasAnyRole('ROLE_USER')")
-//    @PostMapping("/{id}")
-//    public ResponseEntity<?> successPay(@PathVariable Long id){
-//        try {
-//            return new ResponseEntity<>(internalPaymentService.successfullInternalPayment(id), HttpStatus.OK);
-//        }catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//        }
-//    }
-
-
-
-
 
 
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -120,13 +119,6 @@ public class InternalPaymentController {
     public ResponseEntity<?> getById(@PathVariable Long id) {
     InternalPayment res =  internalPaymentService.getById(id);
     return new ResponseEntity<>(res,HttpStatus.OK);
-//        return new ResponseEntity<>(paymentRequestDto, HttpStatus.OK);
-//        PaymentResponseDto response= zarinpalService.paymentRequest(req,serverIp+"/api/v1/internalpayment/callback/"+);
-//        String link = paymentUrl+"/"+response.getData().getAuthority().toString();
-//        Map<String,Object> map = new HashMap<>();
-//        map.put("message","لینک پرداخت با موفقیت ساخته شد");
-//        map.put("link",link);
-//        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
 
@@ -141,7 +133,7 @@ public class InternalPaymentController {
         req.setMobile("09917403979");
         req.setEmail("ali@gmail.com");
 
-        PaymentResponseDto response= zarinpalService.paymentRequest(req,serverIp+"/api/v1/internalpayment/callback/"+res.getTransactionId());
+        PaymentResponseDto response= zarinpalService.paymentRequest(req,redirectUrl+res.getTransactionId(),"پرداخت شهریه");
         String link = paymentUrl+"/"+response.getData().getAuthority().toString();
         Map<String,Object> map = new HashMap<>();
         map.put("message","لینک درگاه با موفقیت ایجاد شد");
@@ -151,19 +143,40 @@ public class InternalPaymentController {
 
 
 //    @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @GetMapping("/callback/{transactionId}")
-    public ResponseEntity<?> callBack(@PathVariable String transactionId,@RequestParam String Authority, @RequestParam String Status){
-        try {
-           InternalPayment res =  internalPaymentService.callBack(transactionId,Status);
-            return new ResponseEntity<>(res, HttpStatus.OK);
+@GetMapping("/callback/{transactionId}")
+public String callBack(@PathVariable String transactionId,
+                       @RequestParam String Authority,
+                       @RequestParam String Status,
+                       Model model) {
 
-        }catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    if ("NOK".equals(Status)) {
+        model.addAttribute("message", "تراکنش ناموفق");
+        model.addAttribute("redirectLink", redirectUrl);
+        return "paymentResult";
     }
 
+    try {
+        InternalPayment payment = internalPaymentService.getByTransactionId(transactionId);
+        VerifyReqDto req = new VerifyReqDto();
+        req.setAuthority(Authority);
+        req.setAmount(payment.getAmount().toString());
 
+        boolean isVerified = zarinpalService.verify(req);
+        if (isVerified) {
+            internalPaymentService.callBack(transactionId, Status);
+            model.addAttribute("message", "تراکنش با موفقیت انجام شد");
+        } else {
+            model.addAttribute("message", "تراکنش ناموفق");
+        }
+        model.addAttribute("redirectLink", redirectUrl);
+        return "paymentResult";
+    } catch (Exception e) {
+//        logger.error("Error processing callback for transactionId: " + transactionId, e);
+        model.addAttribute("message", "خطا در پردازش درخواست");
+        model.addAttribute("error", e.getMessage());
+        return "paymentResult";
+    }
+}
 
 
 

@@ -38,7 +38,8 @@ public class SecurityConfiguration {
                 .cors() // Enable CORS
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**", "/api/otp/**","/api/v1/internalpayment/callback/**")
+                .requestMatchers("/api/v1/auth/**", "/api/otp/**","/api/v1/demo/**",
+                        "/api/v1/internalpayment/callback/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

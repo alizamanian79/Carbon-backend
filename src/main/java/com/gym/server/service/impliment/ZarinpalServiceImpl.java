@@ -90,14 +90,15 @@ public class ZarinpalServiceImpl implements ZarinpalService {
 
 
     @Override
-    public PaymentResponseDto paymentRequest(RequestDto request,String callBack) {
+    public PaymentResponseDto paymentRequest(RequestDto request,String callBack,String description) {
 
-//        myapp.com?Authority=S000000000000000000000000000000678mo&Status=NOK
+
         PaymentRequestDto customPayment = new PaymentRequestDto();
         customPayment.setMerchant_id(merchantId);
         customPayment.setAmount(request.getAmount());
         customPayment.setCallback_url(callBack);
-        customPayment.setDescription("Transaction description.");
+        customPayment.setDescription(description);
+        customPayment.setCurrency("IRR");
         //MetaData
         MetadataDto metadata = new MetadataDto();
         metadata.setMobile(request.getMobile());
@@ -135,12 +136,11 @@ public class ZarinpalServiceImpl implements ZarinpalService {
     }
 
     @Override
-    public VerifyResDto verify(VerifyReqDto req) {
+    public boolean verify(VerifyReqDto req) {
         VerifyReqDto verifyReqDto = new VerifyReqDto();
         verifyReqDto.setMerchant_id(merchantId);
         verifyReqDto.setAmount(req.getAmount());
         verifyReqDto.setAuthority(req.getAuthority());
-
 
         // Set headers
         HttpHeaders headers = new HttpHeaders();
@@ -149,7 +149,6 @@ public class ZarinpalServiceImpl implements ZarinpalService {
 
         // Create the request entity
         HttpEntity<?> requestEntity = new HttpEntity<>(verifyReqDto, headers);
-
         String url =verifyUrl;
         // Make the request
         ResponseEntity<VerifyResDto> responseEntity = restTemplate.exchange(
@@ -161,7 +160,10 @@ public class ZarinpalServiceImpl implements ZarinpalService {
 
         VerifyResDto res = responseEntity.getBody();
 
-        return res;
+        if (res.getData().getCode()==100){
+            return true;
+        }
+        return false;
 
     }
 

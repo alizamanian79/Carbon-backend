@@ -1,7 +1,6 @@
 server:
   port: 8081
 
-
 spring:
   servlet:
     multipart:
@@ -31,6 +30,7 @@ app:
     profileImages: src/main/resources/static/uploads/profileImages
   zarinpal:
     merchantId: 7d0f5d8b-bc21-4d0b-ad94-45b591aab2a2
-    paymentEndpoint: https://sandbox.zarinpal.com/pg/v4/payment/request.json #Post
-    paymentUrl: https://sandbox.zarinpal.com/pg/StartPay #Get
-    verifyUrl: https://sandbox.zarinpal.com/pg/v4/payment/verify.json #Post
+    paymentEndpoint: https://sandbox.zarinpal.com/pg/v4/payment/request.json #Post (Generate Authority Link)
+    paymentUrl: https://sandbox.zarinpal.com/pg/StartPay #Get (Generate Gatewaylink)
+    verifyUrl: https://sandbox.zarinpal.com/pg/v4/payment/verify.json #Post (Verify)
+    redirectUrl: http://localhost:8081/api/v1/internalpayment/callback/

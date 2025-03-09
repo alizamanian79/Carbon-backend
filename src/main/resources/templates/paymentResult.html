@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتیجه پرداخت</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        h1 {
+            color: #333;
+        }
+        .message {
+            font-size: 18px;
+            color: #555;
+            margin: 20px 0;
+        }
+        .error {
+            color: #ff0000;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .redirect-link {
+            margin-top: 20px;
+        }
+        .redirect-link a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .redirect-link a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>نتیجه پرداخت</h1>
+    <div class="message" th:text="${message}">پیام نتیجه پرداخت</div>
+    <div class="error" th:if="${error}" th:text="${error}">خطا (در صورت وجود)</div>
+    <div class="redirect-link">
+        <a th:href="${redirectLink}">بازگشت به سایت</a>
+    </div>
+</div>
+</body>
+</html>

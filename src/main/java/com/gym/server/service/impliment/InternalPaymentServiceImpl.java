@@ -166,7 +166,10 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
         }
     }
 
-
+    @Override
+    public InternalPayment getByTransactionId(String transactionId) {
+      return   internalPaymentRepository.findByTransactionId(transactionId).get();
+    }
 
 
     @Transactional
