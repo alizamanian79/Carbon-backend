@@ -111,7 +111,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
         Optional<InternalPayment> findPayment = internalPaymentRepository.findById(id);
 //        Optional<Account> account = accountRepository.findById(id);
         if (!findPayment.isPresent()) {
-            throw new AppNotFoundException("Pay fee not found");
+            throw new AppNotFoundException("دوره پیدا نشد");
         }
 
 
@@ -129,7 +129,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
         // Only update if not expired
         if (!target.getStatus().equals("expired")) {
-            target.setStatus("Ok");
+            target.setStatus("OK");
             target.setStartAt(LocalDateTime.now());
             target.setEndedAt(target.getStartAt().plusDays(30));
             internalPaymentRepository.save(target);

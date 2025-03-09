@@ -27,8 +27,6 @@ public class ZarinpalController {
     private String paymentUrl;
 
 
-    @Value("${app.zarinpal.redirectUrl}")
-    private String redirectUrl;
 
 
     private final ZarinpalService zarinpalService;
@@ -38,7 +36,7 @@ public class ZarinpalController {
     public ResponseEntity<?> payment(@RequestBody RequestDto req) {
 
 //        return new ResponseEntity<>(paymentRequestDto, HttpStatus.OK);
-      PaymentResponseDto response= zarinpalService.paymentRequest(req,redirectUrl,"شارژ حساب");
+      PaymentResponseDto response= zarinpalService.paymentRequest(req,"jadod","شارژ حساب");
         String link = paymentUrl+"/"+response.getData().getAuthority().toString();
         return new ResponseEntity<>(link, HttpStatus.OK);
     }

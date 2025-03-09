@@ -1,9 +1,5 @@
 package com.gym.server.controller;
 
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import com.gym.server.dto.InternalPayment.InternalPaymentDTO;
 import com.gym.server.dto.Zarinpal.PaymentResponseDto;
 import com.gym.server.dto.Zarinpal.RequestDto;
@@ -40,8 +36,6 @@ public class InternalPaymentController {
     private String serverIp;
 
 
-    @Value("${app.zarinpal.redirectUrl}")
-    private String redirectUrl;
 
 
 
@@ -133,7 +127,7 @@ public class InternalPaymentController {
         req.setMobile("09917403979");
         req.setEmail("ali@gmail.com");
 
-        PaymentResponseDto response= zarinpalService.paymentRequest(req,redirectUrl+res.getTransactionId(),"پرداخت شهریه");
+        PaymentResponseDto response= zarinpalService.paymentRequest(req,serverIp+"/api/v1/internalpayment/callback/"+res.getTransactionId(),"پرداخت شهریه");
         String link = paymentUrl+"/"+response.getData().getAuthority().toString();
         Map<String,Object> map = new HashMap<>();
         map.put("message","لینک درگاه با موفقیت ایجاد شد");
@@ -143,40 +137,46 @@ public class InternalPaymentController {
 
 
 //    @PreAuthorize("hasAnyRole('ROLE_USER')")
-@GetMapping("/callback/{transactionId}")
-public String callBack(@PathVariable String transactionId,
-                       @RequestParam String Authority,
-                       @RequestParam String Status,
-                       Model model) {
+//    @GetMapping("/callback/{transactionId}")
+//    public ResponseEntity<?> callBack(@PathVariable String transactionId,
+//                                      @RequestParam String Authority,
+//                                      @RequestParam String Status){
+//
+//        Map<String,String> map = new HashMap<>();
+//
+//        if (Status.equals("NOK")){
+//            map.put("message","تراکنش ناموفق");
+//            map.put("redirectLink","gogle");
+//            return new ResponseEntity<>(map, HttpStatus.NOT_ACCEPTABLE);
+//        }
+//
+//        try {
+//            InternalPayment payment =internalPaymentService.getByTransactionId(transactionId);
+//            VerifyReqDto req = new VerifyReqDto();
+//            req.setAuthority(Authority);
+//            req.setAmount(payment.getAmount().toString());
+//           boolean res = zarinpalService.verify(req);
+//           if (res==true){
+//               InternalPayment result =  internalPaymentService.callBack(transactionId,Status);
+//               map.put("message","تراکنش با موفقیت انجام شد");
+//               map.put("redirectLink","google.accept");
+//               return new ResponseEntity<>(map, HttpStatus.OK);
+//           }else {
+//               map.put("message","تراکنش ناموفق");
+//               map.put("redirectLink","acceptnot");
+//               return new ResponseEntity<>(map, HttpStatus.NOT_ACCEPTABLE);
+//           }
+//
+//
+//
+//        }catch (Exception e) {
+//            e.printStackTrace();
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
-    if ("NOK".equals(Status)) {
-        model.addAttribute("message", "تراکنش ناموفق");
-        model.addAttribute("redirectLink", redirectUrl);
-        return "paymentResult";
-    }
 
-    try {
-        InternalPayment payment = internalPaymentService.getByTransactionId(transactionId);
-        VerifyReqDto req = new VerifyReqDto();
-        req.setAuthority(Authority);
-        req.setAmount(payment.getAmount().toString());
 
-        boolean isVerified = zarinpalService.verify(req);
-        if (isVerified) {
-            internalPaymentService.callBack(transactionId, Status);
-            model.addAttribute("message", "تراکنش با موفقیت انجام شد");
-        } else {
-            model.addAttribute("message", "تراکنش ناموفق");
-        }
-        model.addAttribute("redirectLink", redirectUrl);
-        return "paymentResult";
-    } catch (Exception e) {
-//        logger.error("Error processing callback for transactionId: " + transactionId, e);
-        model.addAttribute("message", "خطا در پردازش درخواست");
-        model.addAttribute("error", e.getMessage());
-        return "paymentResult";
-    }
-}
 
 
 

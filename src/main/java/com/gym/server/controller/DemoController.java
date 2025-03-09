@@ -12,33 +12,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@AllArgsConstructor
-@RequestMapping("/api/v1/demo")
+@Controller
 public class DemoController {
 
+//
+//    @GetMapping("/user")
+//    public String userAccess() {
+//        try {
+//            return "Hello World";
+//        }catch (Exception e) {
+//            throw new AppForbiddenException("Forbidden");
+//        }
+//    }
+//
+//    @GetMapping("/admin")
+//    public String adminAccess() {
+//        try {
+//            return "Hello World";
+//        }catch (Exception e) {
+//            throw new AppForbiddenException("Forbidden");
+//        }
+//
+//    }
 
-    @GetMapping("/user")
-    public String userAccess() {
-        try {
-            return "Hello World";
-        }catch (Exception e) {
-            throw new AppForbiddenException("Forbidden");
-        }
-    }
 
-    @GetMapping("/admin")
-    public String adminAccess() {
-        try {
-            return "Hello World";
-        }catch (Exception e) {
-            throw new AppForbiddenException("Forbidden");
-        }
-
-    }
-
-
-    @GetMapping("/hello")
+    @RequestMapping("/api/v1/demo")
     public String hello(Model model) {
         model.addAttribute("message", "سلام، خوش آمدید!");
         return "hello"; // نام فایل HTML بدون پسوند
