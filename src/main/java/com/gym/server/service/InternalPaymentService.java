@@ -11,13 +11,11 @@ import java.util.Map;
 public interface InternalPaymentService {
     List<?> getAll();
     InternalPayment add(InternalPaymentDTO req);
-    Course update();
     String delete(Long id);
     Iterable<?> retrieve(Long accountId);
-
     InternalPayment getById(Long id);
 
-    // main
+    // MainActions
     InternalPayment successfullInternalPayment(Long id);
     InternalPayment callBack(String transactionId , String response);
     InternalPayment getByTransactionId(String transactionId);

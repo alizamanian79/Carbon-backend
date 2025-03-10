@@ -1,13 +1,18 @@
 package com.gym.server.controller;
 
+import com.gym.server.dto.AccountDto;
 import com.gym.server.dto.InternalPayment.InternalPaymentDTO;
 import com.gym.server.dto.Zarinpal.PaymentResponseDto;
 import com.gym.server.dto.Zarinpal.RequestDto;
 import com.gym.server.dto.Zarinpal.verify.VerifyReqDto;
 import com.gym.server.dto.Zarinpal.verify.VerifyResDto;
+import com.gym.server.exception.AppNotFoundException;
 import com.gym.server.model.InternalPayment;
+import com.gym.server.model.User;
 import com.gym.server.repository.InternalPaymentRepository;
 import com.gym.server.repository.UserRepository;
+import com.gym.server.service.AccountService;
+import com.gym.server.service.UserService;
 import com.gym.server.service.ZarinpalService;
 import com.gym.server.service.impliment.InternalPaymentServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +33,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/internalpayment")
 public class InternalPaymentController {
 
+    private final UserService userService;
     @Value("${app.zarinpal.paymentUrl}")
     private String paymentUrl;
 
@@ -38,7 +44,7 @@ public class InternalPaymentController {
 
 
 
-
+    private final AccountService accountService;
     private final UserRepository userRepository;
 
 
@@ -120,12 +126,13 @@ public class InternalPaymentController {
     @PostMapping("/payment/{id}")
     public ResponseEntity<?> payment(@PathVariable Long id) {
         InternalPayment res =  internalPaymentService.getById(id);
+        User findUser = userService.getUserById(res.getAccountId().getUser().getId());
         res.getTransactionId();
 
         RequestDto req = new RequestDto();
         req.setAmount(res.getAmount().toString());
-        req.setMobile("09917403979");
-        req.setEmail("ali@gmail.com");
+        req.setMobile(findUser.getPhoneNumber());
+        req.setEmail(findUser.getEmail());
 
         PaymentResponseDto response= zarinpalService.paymentRequest(req,serverIp+"/api/v1/internalpayment/callback/"+res.getTransactionId(),"پرداخت شهریه");
         String link = paymentUrl+"/"+response.getData().getAuthority().toString();
@@ -136,44 +143,29 @@ public class InternalPaymentController {
     }
 
 
-//    @PreAuthorize("hasAnyRole('ROLE_USER')")
-//    @GetMapping("/callback/{transactionId}")
-//    public ResponseEntity<?> callBack(@PathVariable String transactionId,
-//                                      @RequestParam String Authority,
-//                                      @RequestParam String Status){
-//
-//        Map<String,String> map = new HashMap<>();
-//
-//        if (Status.equals("NOK")){
-//            map.put("message","تراکنش ناموفق");
-//            map.put("redirectLink","gogle");
-//            return new ResponseEntity<>(map, HttpStatus.NOT_ACCEPTABLE);
-//        }
-//
-//        try {
-//            InternalPayment payment =internalPaymentService.getByTransactionId(transactionId);
-//            VerifyReqDto req = new VerifyReqDto();
-//            req.setAuthority(Authority);
-//            req.setAmount(payment.getAmount().toString());
-//           boolean res = zarinpalService.verify(req);
-//           if (res==true){
-//               InternalPayment result =  internalPaymentService.callBack(transactionId,Status);
-//               map.put("message","تراکنش با موفقیت انجام شد");
-//               map.put("redirectLink","google.accept");
-//               return new ResponseEntity<>(map, HttpStatus.OK);
-//           }else {
-//               map.put("message","تراکنش ناموفق");
-//               map.put("redirectLink","acceptnot");
-//               return new ResponseEntity<>(map, HttpStatus.NOT_ACCEPTABLE);
-//           }
-//
-//
-//
-//        }catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//        }
-//    }
+
+
+
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @GetMapping("/buy/{id}")
+    public ResponseEntity<?> buyInProgram(@PathVariable Long id) {
+        InternalPayment payment = internalPaymentService.getById(id);
+        if (payment.getAccountId().getAmount() - payment.getAmount() < 0) {
+            throw new AppNotFoundException("موجودی کافی نمیباشد");
+
+        }
+        internalPaymentService.callBack(payment.getTransactionId(),"OK");
+        AccountDto accountDto = new AccountDto();
+        accountDto.setId(payment.getAccountId().getId());
+        accountDto.setAmount(payment.getAmount());
+        accountService.deducationAccount(accountDto);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("message","دوره با موفقیت خریداری شد");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+
+
+    }
 
 
 

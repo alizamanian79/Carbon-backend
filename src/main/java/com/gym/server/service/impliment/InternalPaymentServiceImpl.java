@@ -43,38 +43,22 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
     @Override
     public InternalPayment add(InternalPaymentDTO req) {
-
-
         Optional<Course> findCourse = courseRepository.findById(req.getCourseId());
         Optional<Account> findAccount = accountRepository.findById(req.getAccountId());
-
         if (!findCourse.isPresent()) {
             throw new AppNotFoundException("دوره یافت نشد");
         }
 
-
-        if (findAccount.get().getAmount() - findCourse.get().getAmount() < 0) {
-        throw new AppNotFoundException("موجودی شما برای خرید دوره کافی نمیباشد");}
-
         InternalPayment payment = new InternalPayment();
         payment.setAccountId(findAccount.get());
         payment.setCourseId(findCourse.get());
-
-
         payment.setDiscount(findCourse.get().getDiscount());
-
         payment.setAmount(findCourse.get().getAmount() - ((findCourse.get().getAmount()) * findCourse.get().getDiscount() / 100));
         payment.setStatus("pending");
 
         String code = String.valueOf(new Random().nextInt(90000) + 10000); // ۶ رقمی
         payment.setTransactionId(code);
         return internalPaymentRepository.save(payment);
-    }
-
-    @Override
-    public Course update() {
-        // Implement update logic or remove if not needed
-        return null;
     }
 
     @Override

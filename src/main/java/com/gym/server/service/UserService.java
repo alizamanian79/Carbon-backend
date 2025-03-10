@@ -14,4 +14,5 @@ public interface UserService {
     User setRole(RoleDto req);
     String deleteUser(Long id);
     String uploadProfile(Long id ,String filename);
+    User getUserById(Long id);
 }

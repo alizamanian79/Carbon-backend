@@ -98,7 +98,7 @@ public class ZarinpalServiceImpl implements ZarinpalService {
         customPayment.setAmount(request.getAmount());
         customPayment.setCallback_url(callBack);
         customPayment.setDescription(description);
-        customPayment.setCurrency("IRR");
+        customPayment.setCurrency("IRT");
         //MetaData
         MetadataDto metadata = new MetadataDto();
         metadata.setMobile(request.getMobile());

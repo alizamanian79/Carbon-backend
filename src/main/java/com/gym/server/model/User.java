@@ -1,5 +1,6 @@
 package com.gym.server.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -50,6 +51,7 @@ public class User implements UserDetails {
     private String phoneNumber;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
