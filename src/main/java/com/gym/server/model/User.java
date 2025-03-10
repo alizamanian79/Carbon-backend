@@ -51,7 +51,6 @@ public class User implements UserDetails {
     private String phoneNumber;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 

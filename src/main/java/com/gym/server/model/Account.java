@@ -30,7 +30,7 @@ public class Account {
     private Long id;
 
     @OneToOne(mappedBy = "account",cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference
     private User user;
 
     private Long amount;
