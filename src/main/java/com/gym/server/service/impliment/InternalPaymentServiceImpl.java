@@ -152,6 +152,8 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
             // Check API response
             if (response.equals("OK")) {
                 find.setStatus("OK");
+                find.setStartAt(LocalDateTime.now());
+                find.setEndedAt(find.getStartAt().plusDays(30));
                 internalPaymentRepository.save(find); // Ensure to save the updated entity
                 return find; // Return the updated payment
             } else {
@@ -170,6 +172,11 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
     public InternalPayment getByTransactionId(String transactionId) {
       return   internalPaymentRepository.findByTransactionId(transactionId).get();
     }
+
+
+
+
+
 
 
     @Transactional
