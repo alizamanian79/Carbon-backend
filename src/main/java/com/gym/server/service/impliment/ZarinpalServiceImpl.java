@@ -43,7 +43,6 @@ public class ZarinpalServiceImpl implements ZarinpalService {
     private String verifyUrl;
 
 
-    @Autowired
     private RestTemplate restTemplate;
 
 

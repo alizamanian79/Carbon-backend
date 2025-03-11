@@ -40,7 +40,7 @@ public class OTPService {
         if (existingOtp.isPresent()) {
             return existingOtp.get();
         }
-        String otpCode = String.valueOf(new Random().nextInt(900000) + 100000); // ۶ رقمی
+        String otpCode = String.valueOf(new Random().nextInt(9000) + 1000); // ۶ رقمی
         OTP otp = new OTP(phoneNumber, otpCode);
         return otpRepository.save(otp);
     }

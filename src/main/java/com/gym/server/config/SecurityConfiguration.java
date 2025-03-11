@@ -14,14 +14,20 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
+
+
+
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+
 
     public SecurityConfiguration(
             JwtAuthenticationFilter jwtAuthenticationFilter,
@@ -33,16 +39,15 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .cors() // Enable CORS
+        http.cors() // Enable CORS
                 .and()
+                .csrf().disable() // Disable CSRF protection
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**", "/api/otp/**","/api/v1/demo/**",
-                        "/api/v1/internalpayment/callback/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+                .requestMatchers(
+                        "/api/v1/auth/**", "/api/otp/**","/api/v1/demo/**",
+                        "/api/v1/internalpayment/callback/**"
+                ).permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -54,28 +59,37 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Specify allowed origins
-        configuration.setAllowedOrigins(List.of("http://localhost"));
-        configuration.setAllowedOrigins(List.of("https://sandbox.zarinpal.com"));
+        // Define allowed origins
+        configuration.setAllowedOrigins(Arrays.asList(
+                "http://localhost:8081",
+                "http://localhost:3000",
+                "https://sandbox.zarinpal.com"
 
+                // Uncomment if needed
+                // "http://192.168.61.47"
+        ));
 
+        // Define allowed HTTP methods
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
-        // Specify allowed HTTP methods
-        configuration.setAllowedMethods(List.of("GET", "POST"));
-        // Specify allowed headers
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        // Define allowed headers
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
 
+        // Allow credentials
+        configuration.setAllowCredentials(true);
+
+        // Register the configuration
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        // Apply CORS configuration to all endpoints
         source.registerCorsConfiguration("/**", configuration);
-
         return source;
     }
+
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
 }

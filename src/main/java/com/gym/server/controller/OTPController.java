@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/otp")
+@RequestMapping("/api/v1/auth/otp")
 public class OTPController {
     private final OTPService otpService;
 
@@ -17,7 +17,7 @@ public class OTPController {
         this.otpService = otpService;
     }
 
-    @PostMapping("/generate")
+    @GetMapping("/generate")
     public ResponseEntity<?> generateOTP(@RequestParam String phoneNumber) {
         OTP otp = otpService.generateOTP(phoneNumber);
         Map<String, String> res = new HashMap<>();

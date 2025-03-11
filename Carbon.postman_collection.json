@@ -15,15 +15,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{HOST}}/api/v1/demo/hello",
+							"raw": "{{HOST}}/api/v1/demo",
 							"host": [
 								"{{HOST}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"demo",
-								"hello"
+								"demo"
 							]
 						}
 					},
@@ -172,7 +171,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"phoneNumber\": \"09917403979\",\r\n    \"password\": \"admin\",\r\n    \"email\": \"admin@gmail.com\",\r\n    \"fullName\": \"alizamanian\"\r\n\r\n}",
+									"raw": "{\r\n    \"phoneNumber\": \"09917403579\",\r\n    \"password\": \"admin\",\r\n    \"email\": \"admisn@gmail.com\",\r\n    \"fullName\": \"aliszamanian\"\r\n\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -231,7 +230,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{HOST}}/api/v1/auth/login",
+									"raw": "{{HOST}}/api/v1/auth/signin",
 									"host": [
 										"{{HOST}}"
 									],
@@ -239,7 +238,7 @@
 										"api",
 										"v1",
 										"auth",
-										"login"
+										"signin"
 									]
 								}
 							},
@@ -274,8 +273,11 @@
 									}
 								}
 							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
-								"method": "POST",
+								"method": "GET",
 								"header": [],
 								"body": {
 									"mode": "raw",
@@ -287,12 +289,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{HOST}}/api/otp/generate?phoneNumber=09917403979",
+									"raw": "{{HOST}}/api/v1/auth/otp/generate?phoneNumber=09917403979",
 									"host": [
 										"{{HOST}}"
 									],
 									"path": [
 										"api",
+										"v1",
+										"auth",
 										"otp",
 										"generate"
 									],
@@ -346,12 +350,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{HOST}}/api/otp/validate?phoneNumber=09917403979&otpCode={{OTPCODE}}",
+									"raw": "{{HOST}}/api/v1/auth/otp/validate?phoneNumber=09917403979&otpCode={{OTPCODE}}",
 									"host": [
 										"{{HOST}}"
 									],
 									"path": [
 										"api",
+										"v1",
+										"auth",
 										"otp",
 										"validate"
 									],
@@ -690,7 +696,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\":1,\r\n    \"amount\":1000000\r\n}",
+									"raw": "{\r\n    \"id\":1,\r\n    \"amount\":2000000\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -804,7 +810,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"amount\": \"98000000\",\r\n    \"mobile\": \"09917403979\",\r\n    \"email\": \"alizamaniandev@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"amount\": \"1000000\",\r\n    \"mobile\": \"09917403979\",\r\n    \"email\": \"alizamaniandev@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -821,6 +827,46 @@
 								"v1",
 								"zarinpal",
 								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": \"1000000\",\r\n    \"authority\": \"S000000000000000000000000000000zv2zg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/zarinpal/payment/verify",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"zarinpal",
+								"payment",
+								"verify"
 							]
 						}
 					},
@@ -916,7 +962,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"دوره طلایی\",\r\n    \"description\":\"جدید\",\r\n    \"amount\":150000,\r\n    \"sessions\":5,\r\n    \"discount\":0\r\n}",
+							"raw": "{\r\n    \"title\":\"دوره طلایی\",\r\n    \"description\":\"جدید\",\r\n    \"amount\":2000000,\r\n    \"sessions\":5,\r\n    \"discount\":0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -954,7 +1000,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":2,\r\n    \"title\":\"دوره طلایی2\",\r\n    \"description\":\"جدید\",\r\n    \"amount\":5900000,\r\n    \"sessions\":12,\r\n    \"discount\":660\r\n}",
+							"raw": "{\r\n    \"id\":1,\r\n    \"title\":\"دوره طلایی2\",\r\n    \"description\":\"جدید\",\r\n    \"amount\":2000000,\r\n    \"sessions\":30,\r\n    \"discount\":10\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1044,7 +1090,63 @@
 					"name": "mainActions",
 					"item": [
 						{
-							"name": "success",
+							"name": "Verify",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/v1/internalpayment/verify/1202?Authority={{PaymentAuthority}}&Status=NOK",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"internalpayment",
+										"verify",
+										"1202"
+									],
+									"query": [
+										{
+											"key": "Authority",
+											"value": "{{PaymentAuthority}}"
+										},
+										{
+											"key": "Status",
+											"value": "NOK"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Payment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1059,7 +1161,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/internalpayment/52",
+									"raw": "{{HOST}}/api/v1/internalpayment/payment/152",
 									"host": [
 										"{{HOST}}"
 									],
@@ -1067,7 +1169,61 @@
 										"api",
 										"v1",
 										"internalpayment",
-										"52"
+										"payment",
+										"152"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Payment With Account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/v1/internalpayment/buy/102",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"internalpayment",
+										"buy",
+										"102"
 									]
 								}
 							},
@@ -1124,7 +1280,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"accountId\":1,\r\n    \"courseId\":102\r\n}",
+									"raw": "{\r\n    \"accountId\":1,\r\n    \"courseId\":1\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1199,22 +1355,22 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/fee/1",
+									"raw": "{{HOST}}/api/v1/internalpayment/1102",
 									"host": [
 										"{{HOST}}"
 									],
 									"path": [
 										"api",
 										"v1",
-										"fee",
-										"1"
+										"internalpayment",
+										"1102"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Retrive",
+							"name": "Retrieve for user",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1229,15 +1385,46 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/fee/2",
+									"raw": "{{HOST}}/api/v1/internalpayment/1/list",
 									"host": [
 										"{{HOST}}"
 									],
 									"path": [
 										"api",
 										"v1",
-										"fee",
-										"2"
+										"internalpayment",
+										"1",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get by id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/v1/internalpayment/152",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"internalpayment",
+										"152"
 									]
 								}
 							},
@@ -1285,6 +1472,10 @@
 			"key": "OTPCODE",
 			"value": "",
 			"type": "string"
+		},
+		{
+			"key": "PaymentAuthority",
+			"value": ""
 		}
 	]
 }
