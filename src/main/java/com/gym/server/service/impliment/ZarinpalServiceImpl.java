@@ -42,7 +42,7 @@ public class ZarinpalServiceImpl implements ZarinpalService {
     @Value("${app.zarinpal.verifyUrl}")
     private String verifyUrl;
 
-
+    @Autowired
     private RestTemplate restTemplate;
 
 
