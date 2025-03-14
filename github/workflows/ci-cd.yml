@@ -27,3 +27,7 @@ jobs:
       - name: Run the application
         run: |
           java -jar ./target/server-0.0.1-SNAPSHOT.jar up
+
+#      - name: Deploy to Server
+#        run: |
+#          sshpass -p 'your_password' ssh user@your-server 'cd /path/to/your/app && git pull origin main && java -jar ./target/server-0.0.1-SNAPSHOT.jar up'
