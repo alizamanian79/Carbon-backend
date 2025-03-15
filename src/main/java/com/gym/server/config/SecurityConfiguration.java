@@ -49,9 +49,11 @@ public class SecurityConfiguration {
                 "http://192.168.1.9:3000",
                 "https://carbon-b2vh.onrender.com",
                 "https://carbon-b2vh.onrender.com:3000",
-                "zilanmod.ir",
-                "zilanmod.ir:3000",
-                "zilanmod.ir:80",
+
+
+                "http://zilanmod.ir",
+                "http://zilanmod.ir:3000",
+                "http://zilanmod.ir:80",
 
                 "185.231.115.239:3000",
 
