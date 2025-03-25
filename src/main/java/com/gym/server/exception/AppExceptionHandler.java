@@ -60,4 +60,19 @@ public class AppExceptionHandler {
         return new ResponseEntity<>(appException, HttpStatus.OK);
     }
 
+
+
+    @ExceptionHandler(value = {AppBadRequest.class})
+    public ResponseEntity<Object> handleAppBadRequestException
+            (AppBadRequest appBadRequest)
+    {
+        AppException appException = new AppException(
+                appBadRequest.getMessage(),
+                appBadRequest.getCause(),
+                HttpStatus.BAD_REQUEST
+        );
+
+        return new ResponseEntity<>(appException, HttpStatus.OK);
+    }
+
 }
