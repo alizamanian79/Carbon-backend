@@ -171,7 +171,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"phoneNumber\": \"09917403579\",\r\n    \"password\": \"admin\",\r\n    \"email\": \"admisn@gmail.com\",\r\n    \"fullName\": \"aliszamanian\"\r\n\r\n}",
+									"raw": "{\r\n    \"phoneNumber\": \"09386520680\",\r\n    \"password\": \"mahdi\",\r\n    \"email\": \"mahdi@gmail.com\", // Ekhtiari\r\n    \"fullName\": \"mahdizamaian\" // Ekhtiari\r\n\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -218,8 +218,17 @@
 								}
 							],
 							"request": {
+								"auth": {
+									"type": "noauth"
+								},
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"phoneNumber\": \"09917403979\",\r\n    \"password\": \"admin\"\r\n\r\n}",
@@ -456,7 +465,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\":1,\r\n    \"phoneNumber\": \"09917403979\",\r\n    \"password\": \"admin\",\r\n    \"email\": \"admin@gmail.com\",\r\n    \"fullName\": \"alizamanian\"\r\n\r\n\r\n}",
+									"raw": "{\r\n    \"id\":1,\r\n    \"phoneNumber\": \"09917403979\",\r\n    \"password\": \"admin\",\r\n    \"email\": \"alizamaniandev@gmail.com\",\r\n    \"fullName\": \"alizamanian\"\r\n\r\n\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -535,7 +544,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\":2,\r\n \"roles\": [\r\n        \"USER\",\"ADMIN\"\r\n    ]\r\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -543,7 +552,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{HOST}}/api/v1/user/",
+									"raw": "{{HOST}}/api/v1/user/2",
 									"host": [
 										"{{HOST}}"
 									],
@@ -551,7 +560,7 @@
 										"api",
 										"v1",
 										"user",
-										""
+										"2"
 									]
 								}
 							},
@@ -735,7 +744,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\":1,\r\n    \"amount\":500000\r\n}",
+									"raw": "{\r\n    \"id\":1,\r\n    \"amount\":1000000\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -962,7 +971,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"دوره طلایی\",\r\n    \"description\":\"جدید\",\r\n    \"amount\":2000000,\r\n    \"sessions\":5,\r\n    \"discount\":0\r\n}",
+							"raw": "{\r\n    \"title\":\"دوره نقره ای\",\r\n    \"description\":\"با کادر حرفه ای\",\r\n    \"amount\": 990000,\r\n    \"sessions\":10,\r\n    \"discount\":0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1161,7 +1170,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/internalpayment/payment/152",
+									"raw": "{{HOST}}/api/v1/internalpayment/payment/1",
 									"host": [
 										"{{HOST}}"
 									],
@@ -1170,7 +1179,7 @@
 										"v1",
 										"internalpayment",
 										"payment",
-										"152"
+										"1"
 									]
 								}
 							},
@@ -1214,7 +1223,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/internalpayment/buy/102",
+									"raw": "{{HOST}}/api/v1/internalpayment/buy/2",
 									"host": [
 										"{{HOST}}"
 									],
@@ -1223,7 +1232,7 @@
 										"v1",
 										"internalpayment",
 										"buy",
-										"102"
+										"2"
 									]
 								}
 							},
@@ -1280,7 +1289,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"accountId\":1,\r\n    \"courseId\":1\r\n}",
+									"raw": "{\r\n    \"accountId\":1,\r\n    \"courseId\":2\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1416,7 +1425,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/internalpayment/152",
+									"raw": "{{HOST}}/api/v1/internalpayment/1",
 									"host": [
 										"{{HOST}}"
 									],
@@ -1424,7 +1433,7 @@
 										"api",
 										"v1",
 										"internalpayment",
-										"152"
+										"1"
 									]
 								}
 							},
@@ -1476,6 +1485,11 @@
 		{
 			"key": "PaymentAuthority",
 			"value": ""
+		},
+		{
+			"key": "SERVER_HOST",
+			"value": "http://185.231.115.239:8081",
+			"type": "string"
 		}
 	]
 }
