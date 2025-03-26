@@ -3,11 +3,15 @@ package com.gym.server.controller;
 import com.gym.server.dto.LoginResponse;
 import com.gym.server.dto.LoginUserDto;
 import com.gym.server.dto.RegisterUserDto;
+import com.gym.server.exception.AppBadRequest;
+import com.gym.server.exception.AppExistException;
 import com.gym.server.exception.AppForbiddenException;
 import com.gym.server.model.User;
 import com.gym.server.service.impliment.AuthenticationService;
 import com.gym.server.service.impliment.JwtService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,21 +30,32 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-        User registeredUser = authenticationService.signup(registerUserDto);
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterUserDto registerUserDto,
+                                         BindingResult bindingResult) throws AppBadRequest, AppExistException {
+        if (bindingResult.hasErrors()) {
+          throw new AppBadRequest(bindingResult.getFieldError().getDefaultMessage());
+        }
 
-        return ResponseEntity.ok(registeredUser);
+            User registeredUser = authenticationService.signup(registerUserDto);
+            return ResponseEntity.ok(registeredUser);
+
+
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticate(@RequestBody LoginUserDto loginUserDto) {
+    public ResponseEntity<?> authenticate(@Valid @RequestBody LoginUserDto loginUserDto,BindingResult bindingResult) {
+
+        // check validation
+        if (bindingResult.hasErrors()) {
+            throw new AppBadRequest(bindingResult.getFieldError().getDefaultMessage());
+        }
+
         try {
             User authenticatedUser = authenticationService.authenticate(loginUserDto);
             LoginResponse  token = generateToken(authenticatedUser);
-
             return ResponseEntity.ok(token);
         }catch (Exception e) {
-            throw new AppForbiddenException("نام کاربری یا رمز عبور اشتباه است");
+            throw new AppBadRequest("نام کاربری یا رمز عبور اشتباه است");
         }
 
 

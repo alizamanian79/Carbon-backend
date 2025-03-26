@@ -36,10 +36,8 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Long id;
 
-    @Column(nullable = false)
-    private String fullName;
 
-    @Column(unique = true, length = 100, nullable = false)
+    private String fullName;
     private String email;
 
     @Column(nullable = false)
@@ -47,6 +45,8 @@ public class User implements UserDetails {
 
     private String passwordDecoder;
 
+    @Size(min = 11, max = 11 ,message ="شماره تلفن باید 11 رقم باشد")
+    @NotBlank(message = "شماره تلفن اجباری است")
     @Column(nullable = false)
     private String phoneNumber;
 

@@ -72,7 +72,7 @@ public class AppExceptionHandler {
                 HttpStatus.BAD_REQUEST
         );
 
-        return new ResponseEntity<>(appException, HttpStatus.OK);
+        return new ResponseEntity<>(appException, HttpStatus.BAD_REQUEST);
     }
 
 }

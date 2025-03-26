@@ -3,6 +3,7 @@ package com.gym.server.service.impliment;
 
 import com.gym.server.dto.LoginUserDto;
 import com.gym.server.dto.RegisterUserDto;
+import com.gym.server.exception.AppBadRequest;
 import com.gym.server.exception.AppExistException;
 import com.gym.server.model.Role;
 import com.gym.server.model.User;
@@ -30,7 +31,7 @@ public class AuthenticationService {
 
 
     @Transactional
-    public User signup(RegisterUserDto input) {
+    public User signup(RegisterUserDto input) throws AppExistException {
         Optional<User> existUser =  userRepository.findByPhoneNumber(input.getPhoneNumber());
         if (existUser.isPresent()) {
             throw new AppExistException("کاربر با این شماره تماس وجود دارد");
