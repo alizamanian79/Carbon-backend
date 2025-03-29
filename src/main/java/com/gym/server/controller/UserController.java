@@ -7,6 +7,7 @@ import com.gym.server.exception.AppNotFoundException;
 import com.gym.server.exception.AppSuccessfullException;
 import com.gym.server.model.User;
 import com.gym.server.repository.UserRepository;
+import com.gym.server.service.AuthenticationService;
 import com.gym.server.service.FileService;
 import com.gym.server.service.UserService;
 import lombok.AllArgsConstructor;
@@ -38,11 +39,11 @@ public class UserController {
     private final UserService userService;
     private final FileService fileService;
     private final UserRepository userRepository;
+    private final AuthenticationService authenticationService;
 
     @GetMapping("/me")
     public ResponseEntity<User> authenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = (User) authentication.getPrincipal();
+        User currentUser = authenticationService.me();
         currentUser.setProfile(serverIp+"/api/v1/user/profile?image="+currentUser.getProfile());
         return ResponseEntity.ok(currentUser);
     }

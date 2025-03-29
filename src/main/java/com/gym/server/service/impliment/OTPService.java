@@ -22,7 +22,7 @@ import java.util.Random;
 public class OTPService {
     private final OTPRepository otpRepository;
     private final UserRepository userRepository;
-    private final AuthenticationService authenticationService;
+    private final AuthenticationServiceImpl authenticationService;
     private final JwtService jwtService;
 
 

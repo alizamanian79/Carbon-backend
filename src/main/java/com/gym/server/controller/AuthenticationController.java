@@ -5,9 +5,9 @@ import com.gym.server.dto.LoginUserDto;
 import com.gym.server.dto.RegisterUserDto;
 import com.gym.server.exception.AppBadRequest;
 import com.gym.server.exception.AppExistException;
-import com.gym.server.exception.AppForbiddenException;
 import com.gym.server.model.User;
-import com.gym.server.service.impliment.AuthenticationService;
+import com.gym.server.service.AuthenticationService;
+import com.gym.server.service.impliment.AuthenticationServiceImpl;
 import com.gym.server.service.impliment.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
-    public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService) {
+    public AuthenticationController(JwtService jwtService, AuthenticationServiceImpl authenticationService) {
         this.jwtService = jwtService;
         this.authenticationService = authenticationService;
     }
