@@ -36,8 +36,9 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
     @Override
     public List<InternalPayment> getAll() {
-        return StreamSupport.stream(internalPaymentRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+        List<InternalPayment> list = new ArrayList<>((Collection) internalPaymentRepository.findAll());
+        Collections.reverse(list);
+        return list;
     }
 
 
