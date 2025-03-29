@@ -171,7 +171,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"phoneNumber\": \"09386520680\",\r\n    \"password\": \"mahdi\",\r\n    \"email\": \"mahdi@gmail.com\", // Ekhtiari\r\n    \"fullName\": \"mahdizamaian\" // Ekhtiari\r\n\r\n}",
+									"raw": "{\r\n    \"phoneNumber\": \"09124758691\",\r\n    \"password\": \"minamoardi\",\r\n    \"email\": \"mahdid@gmail.com\", // Ekhtiari\r\n    \"fullName\": \"mins\" // Ekhtiari\r\n\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -587,7 +587,7 @@
 										{
 											"key": "file",
 											"type": "file",
-											"src": "/C:/Users/MEHR GOSTAR/Desktop/-1_orig.jpeg"
+											"src": "/C:/Users/MEHR GOSTAR/Pictures/programming Image/1737660813290.jpg"
 										}
 									]
 								},
@@ -629,7 +629,7 @@
 									"formdata": []
 								},
 								"url": {
-									"raw": "{{HOST}}/api/v1/user/profile?image=4141448b-5d99-44d6-b917-eab012d7b2e4.jpg",
+									"raw": "{{HOST}}/api/v1/user/profile?image=bf004e6b-4558-4673-a6b3-0a2cfbf09448.jpg",
 									"host": [
 										"{{HOST}}"
 									],
@@ -642,7 +642,7 @@
 									"query": [
 										{
 											"key": "image",
-											"value": "4141448b-5d99-44d6-b917-eab012d7b2e4.jpg"
+											"value": "bf004e6b-4558-4673-a6b3-0a2cfbf09448.jpg"
 										}
 									]
 								}
@@ -1170,7 +1170,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/internalpayment/payment/1",
+									"raw": "{{HOST}}/api/v1/internalpayment/payment/502",
 									"host": [
 										"{{HOST}}"
 									],
@@ -1179,7 +1179,7 @@
 										"v1",
 										"internalpayment",
 										"payment",
-										"1"
+										"502"
 									]
 								}
 							},
@@ -1289,7 +1289,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"accountId\":1,\r\n    \"courseId\":2\r\n}",
+									"raw": "{\r\n    \"courseId\":2\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1394,7 +1394,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/internalpayment/1/list",
+									"raw": "{{HOST}}/api/v1/internalpayment/list",
 									"host": [
 										"{{HOST}}"
 									],
@@ -1402,7 +1402,6 @@
 										"api",
 										"v1",
 										"internalpayment",
-										"1",
 										"list"
 									]
 								}
@@ -1425,7 +1424,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/internalpayment/1",
+									"raw": "{{HOST}}/api/v1/internalpayment/502",
 									"host": [
 										"{{HOST}}"
 									],
@@ -1433,7 +1432,7 @@
 										"api",
 										"v1",
 										"internalpayment",
-										"1"
+										"502"
 									]
 								}
 							},

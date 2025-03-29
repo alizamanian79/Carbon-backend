@@ -12,7 +12,7 @@ public interface InternalPaymentService {
     List<?> getAll();
     InternalPayment add(InternalPaymentDTO req);
     String delete(Long id);
-    Iterable<?> retrieve(Long accountId);
+    Iterable<?> retrieve();
     InternalPayment getById(Long id);
 
     // MainActions

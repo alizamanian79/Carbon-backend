@@ -6,10 +6,12 @@ import com.gym.server.exception.AppNotFoundException;
 import com.gym.server.model.Account;
 import com.gym.server.model.Course;
 import com.gym.server.model.InternalPayment;
+import com.gym.server.model.User;
 import com.gym.server.repository.AccountRepository;
 import com.gym.server.repository.CourseRepository;
 import com.gym.server.repository.InternalPaymentRepository;
 import com.gym.server.service.AccountService;
+import com.gym.server.service.AuthenticationService;
 import com.gym.server.service.InternalPaymentService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
     private final AccountRepository accountRepository;
     private final AccountService accountService;
     private final CourseRepository courseRepository;
+    private final AuthenticationService authenticationService;
 
     @Override
     public List<InternalPayment> getAll() {
@@ -44,14 +47,18 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
     @Override
     public InternalPayment add(InternalPaymentDTO req) {
+
+        User currentUser = authenticationService.me();
+
+
         Optional<Course> findCourse = courseRepository.findById(req.getCourseId());
-        Optional<Account> findAccount = accountRepository.findById(req.getAccountId());
+
         if (!findCourse.isPresent()) {
             throw new AppNotFoundException("دوره یافت نشد");
         }
 
         InternalPayment payment = new InternalPayment();
-        payment.setAccountId(findAccount.get());
+        payment.setAccountId(currentUser.getAccount());
         payment.setCourseId(findCourse.get());
         payment.setDiscount(findCourse.get().getDiscount());
         payment.setAmount(findCourse.get().getAmount() - ((findCourse.get().getAmount()) * findCourse.get().getDiscount() / 100));
@@ -73,8 +80,9 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
     }
 
     @Override
-    public Iterable<?> retrieve(Long accountId) {
-       return internalPaymentRepository.findByAccountId_Id(accountId);
+    public Iterable<?> retrieve() {
+        User currentUser = authenticationService.me();
+       return internalPaymentRepository.findByAccountId_Id(currentUser.getAccount().getId());
     }
 
     @Override

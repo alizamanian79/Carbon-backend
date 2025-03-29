@@ -12,6 +12,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 public class InternalPaymentDTO {
-    private Long accountId;
+//    private Long accountId;
     private Long courseId;
 }

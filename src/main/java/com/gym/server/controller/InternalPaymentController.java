@@ -83,9 +83,10 @@ public class InternalPaymentController {
 
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @GetMapping("/{accountId}/list")
-    public ResponseEntity<?> listPayments(@PathVariable Long accountId){
-        return new ResponseEntity<>(internalPaymentService.retrieve(accountId), HttpStatus.OK);
+    @GetMapping("/list")
+    public ResponseEntity<?> listPayments(){
+
+        return new ResponseEntity<>(internalPaymentService.retrieve(), HttpStatus.OK);
     }
 
 
