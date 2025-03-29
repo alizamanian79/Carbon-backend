@@ -122,7 +122,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
         // Only update if not expired
         if (!target.getStatus().equals("expired")) {
-            target.setStatus("OK");
+            target.setStatus("ok");
             target.setStartAt(LocalDateTime.now());
             target.setEndedAt(target.getStartAt().plusDays(30));
             internalPaymentRepository.save(target);
@@ -144,7 +144,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
             // Check API response
             if (response.equals("OK")) {
-                find.setStatus("OK");
+                find.setStatus("ok");
                 find.setStartAt(LocalDateTime.now());
                 find.setEndedAt(find.getStartAt().plusDays(30));
                 internalPaymentRepository.save(find); // Ensure to save the updated entity
