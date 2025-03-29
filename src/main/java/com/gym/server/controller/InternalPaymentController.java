@@ -6,6 +6,7 @@ import com.gym.server.dto.Zarinpal.PaymentResponseDto;
 import com.gym.server.dto.Zarinpal.RequestDto;
 import com.gym.server.dto.Zarinpal.verify.VerifyReqDto;
 import com.gym.server.dto.Zarinpal.verify.VerifyResDto;
+import com.gym.server.exception.AppBadRequest;
 import com.gym.server.exception.AppNotFoundException;
 import com.gym.server.model.InternalPayment;
 import com.gym.server.model.User;
@@ -126,6 +127,12 @@ public class InternalPaymentController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/payment/{id}")
     public ResponseEntity<?> payment(@PathVariable Long id) {
+
+        InternalPayment exist = internalPaymentService.getById(id);
+        if(exist.getStatus() == "OK" || exist.getStatus() == "expired" || exist.getStartAt() !=null ) {
+            throw new AppBadRequest("وضعیت این برنامه مشخص میباشد و امکان پرداخت وجود ندارد");
+        }
+
         InternalPayment res =  internalPaymentService.getById(id);
         User findUser = userService.getUserById(res.getAccountId().getUser().getId());
         res.getTransactionId();
