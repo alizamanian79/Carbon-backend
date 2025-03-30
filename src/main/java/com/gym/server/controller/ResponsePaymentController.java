@@ -47,6 +47,7 @@ public class ResponsePaymentController {
                            Model model) {
 
         if ("NOK".equals(Status)) {
+            internalPaymentService.callBackDelete(transactionId);
             model.addAttribute("message", "تراکنش ناموفق");
             model.addAttribute("redirectLink", redirectUrl);
 
@@ -57,12 +58,13 @@ public class ResponsePaymentController {
             VerifyReqDto req = new VerifyReqDto();
             req.setAuthority(Authority);
             req.setAmount(payment.getAmount().toString());
-
             boolean isVerified = zarinpalService.verify(req);
+
             if (isVerified) {
                 internalPaymentService.callBack(transactionId, Status);
                 model.addAttribute("message", "تراکنش با موفقیت انجام شد");
             } else {
+                internalPaymentService.callBackDelete(transactionId);
                 model.addAttribute("message", "تراکنش ناموفق");
             }
             model.addAttribute("redirectLink", redirectUrl);

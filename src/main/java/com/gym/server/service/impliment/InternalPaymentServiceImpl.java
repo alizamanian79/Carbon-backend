@@ -75,6 +75,11 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
     public String delete(Long id) {
         Optional<InternalPayment> findInternalPayment = internalPaymentRepository.findById(id);
         if (!findInternalPayment.isPresent()) {
+            Optional<InternalPayment> findByTransactionId = internalPaymentRepository.findByTransactionId(id.toString());
+            if (findByTransactionId.isPresent()) {
+                internalPaymentRepository.deleteByTransactionId(id.toString());
+                return "برنامه حذف شد";
+            }
             throw new AppNotFoundException("دوره درون برنامه پیدا نشد");
         }
         internalPaymentRepository.deleteById(id);
@@ -151,17 +156,37 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
                 find.setEndedAt(find.getStartAt().plusDays(30));
                 internalPaymentRepository.save(find); // Ensure to save the updated entity
 
-            } else if (response.equals("NOK")) {
-                System.out.println("This call successfully");
-                // Delete Payment
-                internalPaymentRepository.deleteByTransactionId(find.getTransactionId());
-                throw new AppSuccessfullException("حذف شد");
+            }else {
+                internalPaymentRepository.delete(find);
             }
+
+
         } else {
             // Handle the case where the payment is not found
             throw new AppNotFoundException("پیدا نشد");
         }
     }
+
+
+    @Override
+    public void callBackDelete(String transactionId) {
+        // Find the payment record by transaction ID
+        Optional<InternalPayment> optionalPayment = internalPaymentRepository.findByTransactionId(transactionId);
+
+        // Check if the payment record exists
+        if (optionalPayment.isPresent()) {
+            var find = optionalPayment.get();
+            internalPaymentRepository.deleteById(find.getId());
+
+
+        } else {
+            // Handle the case where the payment is not found
+            throw new AppNotFoundException("پیدا نشد");
+        }
+    }
+
+
+
 
     @Override
     public InternalPayment getByTransactionId(String transactionId) {

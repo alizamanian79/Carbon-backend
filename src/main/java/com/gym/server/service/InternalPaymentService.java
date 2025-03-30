@@ -20,4 +20,5 @@ public interface InternalPaymentService {
     void callBack(String transactionId , String response);
     InternalPayment getByTransactionId(String transactionId);
     public void isCourseValidate();
+    public void callBackDelete(String transactionId);
 }

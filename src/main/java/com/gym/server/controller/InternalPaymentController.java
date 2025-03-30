@@ -116,17 +116,17 @@ public class InternalPaymentController {
 
 
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @PostMapping
-    public ResponseEntity<?> add(@RequestBody Long req) throws AppBadRequest{
-        try {
-            return new ResponseEntity<>(internalPaymentService.add(req), HttpStatus.OK);
-        }catch (Exception e) {
-            e.printStackTrace();
-            throw new AppBadRequest(e.getMessage());
-        }
-
-    }
+//    @PreAuthorize("hasAnyRole('ROLE_USER')")
+//    @PostMapping
+//    public ResponseEntity<?> add(@RequestBody Long req) throws AppBadRequest{
+//        try {
+//            return new ResponseEntity<>(internalPaymentService.add(req), HttpStatus.OK);
+//        }catch (Exception e) {
+//            e.printStackTrace();
+//            throw new AppBadRequest(e.getMessage());
+//        }
+//
+//    }
 
 
     @PreAuthorize("hasRole('ROLE_USER')")
