@@ -208,21 +208,25 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
 
 
-    public static String convertToPersianDate(String startAt) {
-        // Define the formatter for the incoming date
-        DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_DATE_TIME;
+    @Transactional
+    @Scheduled(cron = "0 0 0 * * ?") // Runs every day at midnight
+    public void deletePendingCourse() {
+        // Convert Iterable to List
+        List<InternalPayment> payments = StreamSupport.stream(internalPaymentRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
 
-        // Parse the input string to LocalDateTime
-        LocalDateTime startDateTime = LocalDateTime.parse(startAt, isoFormatter);
+        LocalDateTime now = LocalDateTime.now();
 
-        // Define the Persian date formatter
-        DateTimeFormatter persianFormatter = new DateTimeFormatterBuilder()
-                .appendPattern("yyyy/MM/dd HH:mm:ss")
-                .toFormatter(Locale.forLanguageTag("fa"));
+        for (InternalPayment payment : payments) {
+            // Check if endedAt is not null before comparing
+            if (payment.getStatus().equals("pending")) {
+                System.out.println("Start cleaning");
+                internalPaymentRepository.delete(payment);
+            }
+        }
 
-        // Format the LocalDateTime to Persian date string
-        return startDateTime.format(persianFormatter);
     }
+
 
 
 
