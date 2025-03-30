@@ -2,6 +2,7 @@ package com.gym.server.service.impliment;
 
 import com.gym.server.dto.AccountDto;
 import com.gym.server.dto.InternalPayment.InternalPaymentDTO;
+import com.gym.server.exception.AppBadRequest;
 import com.gym.server.exception.AppNotFoundException;
 import com.gym.server.model.Account;
 import com.gym.server.model.Course;
@@ -46,11 +47,11 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
 
     @Override
-    public InternalPayment add(InternalPaymentDTO req) {
+    public InternalPayment add(InternalPaymentDTO req) throws AppBadRequest {
+
+        isCourseValidate();
 
         User currentUser = authenticationService.me();
-
-
         Optional<Course> findCourse = courseRepository.findById(req.getCourseId());
 
         if (!findCourse.isPresent()) {
@@ -82,16 +83,16 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
     @Override
     public Iterable<?> retrieve() {
         User currentUser = authenticationService.me();
-       return internalPaymentRepository.findByAccountId_Id(currentUser.getAccount().getId());
+        return internalPaymentRepository.findByAccountId_Id(currentUser.getAccount().getId());
     }
 
     @Override
     public InternalPayment getById(Long id) {
-       Optional<InternalPayment> find =  internalPaymentRepository.findById(id);
-       if (!find.isPresent()) {
-           throw new AppNotFoundException("Not found");
-       }
-       return find.get();
+        Optional<InternalPayment> find = internalPaymentRepository.findById(id);
+        if (!find.isPresent()) {
+            throw new AppNotFoundException("Not found");
+        }
+        return find.get();
     }
 
 
@@ -116,7 +117,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
         accountDto.setId(userAccount.get().getId());
         accountDto.setAmount(target.getAmount());
         Boolean checkAccount = accountService.deducationAccount(accountDto);
-        if (checkAccount==false) {
+        if (checkAccount == false) {
             throw new AppNotFoundException("موجودی کافی نمیباشد");
         }
 
@@ -163,13 +164,27 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
     @Override
     public InternalPayment getByTransactionId(String transactionId) {
-      return   internalPaymentRepository.findByTransactionId(transactionId).get();
+        return internalPaymentRepository.findByTransactionId(transactionId).get();
     }
 
+    @Override
+    public void isCourseValidate() throws AppBadRequest {
 
+        LocalDateTime now = LocalDateTime.now();
+        User currentUser = authenticationService.me();
+        Iterable<InternalPayment> list = internalPaymentRepository.findByAccountId_Id(currentUser.getAccount().getId());
+        for (InternalPayment payment : list) {
+            if (payment.getStatus().equals("ok")) {
+                throw new AppBadRequest("دوره شما به پایان نرسیده");
 
+            }
+            else if (payment.getStatus().equals("pending")) {
+                throw new AppBadRequest("وضعیت قبلی دوره را مشخص کنید");
+            }
 
+        }
 
+    };
 
 
     @Transactional
@@ -208,6 +223,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
         // Format the LocalDateTime to Persian date string
         return startDateTime.format(persianFormatter);
     }
+
 
 
 

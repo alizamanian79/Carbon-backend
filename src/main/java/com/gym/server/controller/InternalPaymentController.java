@@ -69,12 +69,12 @@ public class InternalPaymentController {
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping
-    public ResponseEntity<?> add(@RequestBody InternalPaymentDTO req){
+    public ResponseEntity<?> add(@RequestBody InternalPaymentDTO req) throws AppBadRequest{
         try {
             return new ResponseEntity<>(internalPaymentService.add(req), HttpStatus.OK);
         }catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            throw new AppBadRequest(e.getMessage());
         }
 
     }
@@ -126,7 +126,7 @@ public class InternalPaymentController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/payment/{id}")
-    public ResponseEntity<?> payment(@PathVariable Long id) {
+    public ResponseEntity<?> payment(@PathVariable Long id) throws AppBadRequest {
 
         InternalPayment exist = internalPaymentService.getById(id);
         if(exist.getStatus() == "OK" || exist.getStatus() == "expired" || exist.getStartAt() !=null ) {
