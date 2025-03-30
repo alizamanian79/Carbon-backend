@@ -10,14 +10,14 @@ import java.util.Map;
 
 public interface InternalPaymentService {
     List<?> getAll();
-    InternalPayment add(InternalPaymentDTO req);
+    InternalPayment add(Long req);
     String delete(Long id);
     Iterable<?> retrieve();
     InternalPayment getById(Long id);
 
     // MainActions
     InternalPayment successfullInternalPayment(Long id);
-    InternalPayment callBack(String transactionId , String response);
+    void callBack(String transactionId , String response);
     InternalPayment getByTransactionId(String transactionId);
     public void isCourseValidate();
 }

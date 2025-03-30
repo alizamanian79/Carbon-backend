@@ -14,4 +14,6 @@ public interface InternalPaymentRepository extends CrudRepository<InternalPaymen
     InternalPayment findByTransactionId(String transactionId, Sort sort);
 
     Optional<InternalPayment> findByTransactionId(String id);
+
+    void deleteByTransactionId(String transactionId);
 }

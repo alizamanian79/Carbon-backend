@@ -67,17 +67,7 @@ public class InternalPaymentController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @PostMapping
-    public ResponseEntity<?> add(@RequestBody InternalPaymentDTO req) throws AppBadRequest{
-        try {
-            return new ResponseEntity<>(internalPaymentService.add(req), HttpStatus.OK);
-        }catch (Exception e) {
-            e.printStackTrace();
-            throw new AppBadRequest(e.getMessage());
-        }
 
-    }
 
 
 
@@ -124,14 +114,32 @@ public class InternalPaymentController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @PostMapping("/payment/{id}")
-    public ResponseEntity<?> payment(@PathVariable Long id) throws AppBadRequest {
 
+
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PostMapping
+    public ResponseEntity<?> add(@RequestBody Long req) throws AppBadRequest{
+        try {
+            return new ResponseEntity<>(internalPaymentService.add(req), HttpStatus.OK);
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new AppBadRequest(e.getMessage());
+        }
+
+    }
+
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping("/payment/{courseid}")
+    public ResponseEntity<?> payment(@PathVariable Long courseid) throws AppBadRequest {
+        InternalPayment paymentCreated = internalPaymentService.add(courseid);
+        Long id = paymentCreated.getId();
         InternalPayment exist = internalPaymentService.getById(id);
         if(exist.getStatus() == "OK" || exist.getStatus() == "expired" || exist.getStartAt() !=null ) {
             throw new AppBadRequest("وضعیت این برنامه مشخص میباشد و امکان پرداخت وجود ندارد");
         }
+
+
 
         InternalPayment res =  internalPaymentService.getById(id);
         User findUser = userService.getUserById(res.getAccountId().getUser().getId());

@@ -4,6 +4,7 @@ import com.gym.server.dto.AccountDto;
 import com.gym.server.dto.InternalPayment.InternalPaymentDTO;
 import com.gym.server.exception.AppBadRequest;
 import com.gym.server.exception.AppNotFoundException;
+import com.gym.server.exception.AppSuccessfullException;
 import com.gym.server.model.Account;
 import com.gym.server.model.Course;
 import com.gym.server.model.InternalPayment;
@@ -47,12 +48,12 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
 
     @Override
-    public InternalPayment add(InternalPaymentDTO req) throws AppBadRequest {
+    public InternalPayment add(Long req) throws AppBadRequest {
 
         isCourseValidate();
 
         User currentUser = authenticationService.me();
-        Optional<Course> findCourse = courseRepository.findById(req.getCourseId());
+        Optional<Course> findCourse = courseRepository.findById(req);
 
         if (!findCourse.isPresent()) {
             throw new AppNotFoundException("دوره یافت نشد");
@@ -135,7 +136,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
 
     @Transactional
     @Override
-    public InternalPayment callBack(String transactionId, String response) {
+    public void callBack(String transactionId, String response) {
         // Find the payment record by transaction ID
         Optional<InternalPayment> optionalPayment = internalPaymentRepository.findByTransactionId(transactionId);
 
@@ -149,12 +150,12 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
                 find.setStartAt(LocalDateTime.now());
                 find.setEndedAt(find.getStartAt().plusDays(30));
                 internalPaymentRepository.save(find); // Ensure to save the updated entity
-                return find; // Return the updated payment
-            } else {
-                // Handle other response cases if necessary
-                find.setStatus("pending"); // Example status for other responses
-                internalPaymentRepository.save(find); // Save the updated entity
-                return find; // Return the updated payment
+
+            } else if (response.equals("NOK")) {
+                System.out.println("This call successfully");
+                // Delete Payment
+                internalPaymentRepository.deleteByTransactionId(find.getTransactionId());
+                throw new AppSuccessfullException("حذف شد");
             }
         } else {
             // Handle the case where the payment is not found
