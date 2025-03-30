@@ -171,7 +171,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"phoneNumber\": \"09124758691\",\r\n    \"password\": \"minamoardi\",\r\n    \"email\": \"mahdid@gmail.com\", // Ekhtiari\r\n    \"fullName\": \"mins\" // Ekhtiari\r\n\r\n}",
+									"raw": "{\r\n    \"phoneNumber\": \"09917403980\",\r\n    \"password\": \"mahdi\",\r\n    \"email\": \"mahdi@gmail.com\", // Ekhtiari\r\n    \"fullName\": \"mahdi\" // Ekhtiari\r\n\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -231,7 +231,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"phoneNumber\": \"09917403979\",\r\n    \"password\": \"admin\"\r\n\r\n}",
+									"raw": "{\r\n    \"phoneNumber\": \"09917403980\",\r\n    \"password\": \"mahdi\"\r\n\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -971,7 +971,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"دوره نقره ای\",\r\n    \"description\":\"با کادر حرفه ای\",\r\n    \"amount\": 990000,\r\n    \"sessions\":10,\r\n    \"discount\":0\r\n}",
+							"raw": "{\r\n    \"title\":\"دوره حرفه ای\",\r\n    \"description\":\"با کادر حرفه ای\",\r\n    \"amount\": 5000000,\r\n    \"sessions\":30,\r\n    \"discount\":50\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1170,7 +1170,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/internalpayment/payment/502",
+									"raw": "{{HOST}}/api/v1/internalpayment/payment/1",
 									"host": [
 										"{{HOST}}"
 									],
@@ -1179,7 +1179,7 @@
 										"v1",
 										"internalpayment",
 										"payment",
-										"502"
+										"1"
 									]
 								}
 							},
@@ -1289,7 +1289,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"courseId\":2\r\n}",
+									"raw": "{\r\n    \"courseId\":1\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1364,7 +1364,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/internalpayment/1102",
+									"raw": "{{HOST}}/api/v1/internalpayment/102",
 									"host": [
 										"{{HOST}}"
 									],
@@ -1372,7 +1372,7 @@
 										"api",
 										"v1",
 										"internalpayment",
-										"1102"
+										"102"
 									]
 								}
 							},
@@ -1424,7 +1424,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/internalpayment/502",
+									"raw": "{{HOST}}/api/v1/internalpayment/653",
 									"host": [
 										"{{HOST}}"
 									],
@@ -1432,7 +1432,7 @@
 										"api",
 										"v1",
 										"internalpayment",
-										"502"
+										"653"
 									]
 								}
 							},
