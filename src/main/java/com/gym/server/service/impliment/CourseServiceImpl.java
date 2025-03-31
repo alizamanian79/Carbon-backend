@@ -35,6 +35,7 @@ public class CourseServiceImpl implements CourseService {
         fee.setSessions(req.getSessions());
         fee.setAmount(req.getAmount());
         fee.setDiscount(req.getDiscount());
+        fee.setPeriod(req.getPeriod());
         return courseRepository.save(fee);
     }
 
@@ -47,6 +48,7 @@ public class CourseServiceImpl implements CourseService {
         existFee.setSessions(req.getSessions());
         existFee.setAmount(req.getAmount());
         existFee.setDiscount(req.getDiscount());
+        existFee.setPeriod(req.getPeriod());
         return courseRepository.save(existFee);
 
     }

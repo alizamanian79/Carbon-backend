@@ -23,6 +23,7 @@ public class Course {
     private Long sessions;
     private Long amount;
     private Long discount;
+    private Long period;
 
     @CreationTimestamp
     private Date createdAt;
