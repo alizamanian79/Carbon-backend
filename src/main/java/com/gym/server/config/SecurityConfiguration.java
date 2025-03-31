@@ -45,8 +45,15 @@ public class SecurityConfiguration {
         configuration.setAllowedOrigins(Arrays.asList(
 
                 // Clients
-                "http://localhost:3000",
+                "http://192.168.1.14",
+                "http://192.168.1.14:80",
                 "http://192.168.1.14:3000",
+
+                "http://localhost",
+                "http://localhost:80",
+                "http://localhost:3000",
+
+
                 "https://carbon-b2vh.onrender.com",
                 "https://carbon-b2vh.onrender.com:3000",
 
