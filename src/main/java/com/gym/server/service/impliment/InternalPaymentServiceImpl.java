@@ -65,6 +65,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
         payment.setDiscount(findCourse.get().getDiscount());
         payment.setAmount(findCourse.get().getAmount() - ((findCourse.get().getAmount()) * findCourse.get().getDiscount() / 100));
         payment.setStatus("pending");
+        payment.setRemSessions(findCourse.get().getSessions());
 
         String code = String.valueOf(new Random().nextInt(90000) + 10000); // ۶ رقمی
         payment.setTransactionId(code);
