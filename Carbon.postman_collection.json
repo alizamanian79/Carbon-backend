@@ -231,7 +231,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"phoneNumber\": \"09917403980\",\r\n    \"password\": \"mahdi\"\r\n\r\n}",
+									"raw": "{\r\n    \"phoneNumber\": \"09917403979\",\r\n    \"password\": \"admin\"\r\n\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -971,7 +971,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"دوره حرفه ای\",\r\n    \"description\":\"با کادر حرفه ای\",\r\n    \"amount\": 5000000,\r\n    \"sessions\":30,\r\n    \"discount\":50\r\n}",
+							"raw": "{\r\n    \"title\":\"شمش\",\r\n    \"description\":\"تقوی\",\r\n    \"amount\": 9000000,\r\n    \"sessions\":12,\r\n    \"discount\":0,\r\n    \"period\":60\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1009,7 +1009,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":1,\r\n    \"title\":\"دوره طلایی2\",\r\n    \"description\":\"جدید\",\r\n    \"amount\":2000000,\r\n    \"sessions\":30,\r\n    \"discount\":10\r\n}",
+							"raw": "{\r\n    \"id\":152,\r\n    \"title\":\"دوره طلایی2\",\r\n    \"description\":\"جدید\",\r\n    \"amount\":2000000,\r\n    \"sessions\":30,\r\n    \"discount\":10,\r\n    \"period\":30\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1170,16 +1170,21 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/internalpayment/payment/1",
+									"raw": "http://192.168.1.14:8081/api/v1/internalpayment/payment/152",
+									"protocol": "http",
 									"host": [
-										"{{HOST}}"
+										"192",
+										"168",
+										"1",
+										"14"
 									],
+									"port": "8081",
 									"path": [
 										"api",
 										"v1",
 										"internalpayment",
 										"payment",
-										"1"
+										"152"
 									]
 								}
 							},
@@ -1364,7 +1369,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/internalpayment/102",
+									"raw": "{{HOST}}/api/v1/internalpayment/1902",
 									"host": [
 										"{{HOST}}"
 									],
@@ -1372,7 +1377,7 @@
 										"api",
 										"v1",
 										"internalpayment",
-										"102"
+										"1902"
 									]
 								}
 							},
