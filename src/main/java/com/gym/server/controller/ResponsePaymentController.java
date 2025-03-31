@@ -29,6 +29,11 @@ public class ResponsePaymentController {
 
 
 
+    @Value("${app.zarinpal.sucessfullRedirectLink}")
+    private String successRedirectLink;
+
+    @Value("${app.zarinpal.errorRedirectLink}")
+    private String errorRedirectLink;
 
     private final UserRepository userRepository;
 
@@ -38,7 +43,7 @@ public class ResponsePaymentController {
     private final InternalPaymentRepository internalPaymentRepository;
     private final ZarinpalService zarinpalService;
 
-    String redirectUrl="google.com";
+
 
     @RequestMapping("/api/v1/internalpayment/callback/{transactionId}")
     public String callBack(@PathVariable String transactionId,
@@ -46,10 +51,11 @@ public class ResponsePaymentController {
                            @RequestParam String Status,
                            Model model) {
 
+
         if ("NOK".equals(Status)) {
             internalPaymentService.callBackDelete(transactionId);
             model.addAttribute("message", "تراکنش ناموفق");
-            model.addAttribute("redirectLink", redirectUrl);
+            model.addAttribute("redirectLink", errorRedirectLink);
 
         }
 
@@ -63,11 +69,12 @@ public class ResponsePaymentController {
             if (isVerified) {
                 internalPaymentService.callBack(transactionId, Status);
                 model.addAttribute("message", "تراکنش با موفقیت انجام شد");
+                model.addAttribute("redirectLink", successRedirectLink);
             } else {
                 internalPaymentService.callBackDelete(transactionId);
                 model.addAttribute("message", "تراکنش ناموفق");
             }
-            model.addAttribute("redirectLink", redirectUrl);
+            model.addAttribute("redirectLink", errorRedirectLink);
 
         } catch (Exception e) {
 //        logger.error("Error processing callback for transactionId: " + transactionId, e);

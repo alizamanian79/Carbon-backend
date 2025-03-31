@@ -38,6 +38,7 @@ public class InternalPayment {
     private Long amount;
     private String status;
     private long remSessions;
+    private long programPeriod;
 
     private String transactionId;
 

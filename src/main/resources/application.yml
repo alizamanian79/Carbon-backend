@@ -34,3 +34,5 @@ app:
     paymentEndpoint: https://sandbox.zarinpal.com/pg/v4/payment/request.json #Post (Generate Authority Link)
     paymentUrl: https://sandbox.zarinpal.com/pg/StartPay #Get (Generate Gatewaylink)
     verifyUrl: https://sandbox.zarinpal.com/pg/v4/payment/verify.json #Post (Verify)
+    sucessfullRedirectLink: http://zilanmod.ir/profile/dashboard
+    errorRedirectLink: http://zilanmod.ir/profile/dashboard
