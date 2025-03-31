@@ -202,11 +202,12 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
         Iterable<InternalPayment> list = internalPaymentRepository.findByAccountId_Id(currentUser.getAccount().getId());
         for (InternalPayment payment : list) {
             if (payment.getStatus().equals("ok")) {
-                throw new AppBadRequest("دوره شما به پایان نرسیده");
+                throw new AppBadRequest("دوره شما دارای اعتبار میباشد");
 
             }
             else if (payment.getStatus().equals("pending")) {
-                throw new AppBadRequest("وضعیت قبلی دوره را مشخص کنید");
+                internalPaymentRepository.delete(payment);
+
             }
 
         }
