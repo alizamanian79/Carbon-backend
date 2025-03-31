@@ -46,7 +46,7 @@ public class SecurityConfiguration {
 
                 // Clients
                 "http://localhost:3000",
-                "http://192.168.1.9:3000",
+                "http://192.168.1.14:3000",
                 "https://carbon-b2vh.onrender.com",
                 "https://carbon-b2vh.onrender.com:3000",
 
@@ -59,7 +59,7 @@ public class SecurityConfiguration {
 
                 // Servers
                 "http://localhost:8081",
-                "http://192.168.1.9:8081",
+                "http://192.168.1.14:8081",
                 "185.231.115.239:8081",
 
                 // Web service apis
