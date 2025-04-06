@@ -592,7 +592,7 @@
 									]
 								},
 								"url": {
-									"raw": "{{HOST}}/api/v1/user/profile",
+									"raw": "{{HOST}}/api/v1/user/upload/profile",
 									"host": [
 										"{{HOST}}"
 									],
@@ -600,6 +600,7 @@
 										"api",
 										"v1",
 										"user",
+										"upload",
 										"profile"
 									]
 								}
@@ -607,20 +608,13 @@
 							"response": []
 						},
 						{
-							"name": "Retrive profile",
+							"name": "Retrive profile By id",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{ACCESS_TOKEN}}",
-											"type": "string"
-										}
-									]
+									"type": "noauth"
 								},
 								"method": "GET",
 								"header": [],
@@ -629,7 +623,7 @@
 									"formdata": []
 								},
 								"url": {
-									"raw": "{{HOST}}/api/v1/user/profile?image=bf004e6b-4558-4673-a6b3-0a2cfbf09448.jpg",
+									"raw": "{{HOST}}/api/v1/user/profile/id/1",
 									"host": [
 										"{{HOST}}"
 									],
@@ -637,13 +631,41 @@
 										"api",
 										"v1",
 										"user",
-										"profile"
+										"profile",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Retrive profile Image",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile/image/f95e8303-f044-4981-a698-61b5b4eebefc.jpg",
+									"host": [
+										"{{HOST}}"
 									],
-									"query": [
-										{
-											"key": "image",
-											"value": "bf004e6b-4558-4673-a6b3-0a2cfbf09448.jpg"
-										}
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"image",
+										"f95e8303-f044-4981-a698-61b5b4eebefc.jpg"
 									]
 								}
 							},
@@ -971,7 +993,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"شمش\",\r\n    \"description\":\"تقوی\",\r\n    \"amount\": 9000000,\r\n    \"sessions\":12,\r\n    \"discount\":0,\r\n    \"period\":60\r\n}",
+							"raw": "{\r\n    \"title\":\"برنز\",\r\n    \"description\":\"حسین اقایی\",\r\n    \"amount\": 3500000,\r\n    \"sessions\":22,\r\n    \"discount\":0,\r\n    \"period\":10\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1170,7 +1192,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://192.168.1.14:8081/api/v1/internalpayment/payment/152",
+									"raw": "http://192.168.1.14:8081/api/v1/internalpayment/payment/102",
 									"protocol": "http",
 									"host": [
 										"192",
@@ -1184,7 +1206,7 @@
 										"v1",
 										"internalpayment",
 										"payment",
-										"152"
+										"102"
 									]
 								}
 							},
@@ -1369,7 +1391,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/internalpayment/1902",
+									"raw": "{{HOST}}/api/v1/internalpayment/106",
 									"host": [
 										"{{HOST}}"
 									],
@@ -1377,7 +1399,7 @@
 										"api",
 										"v1",
 										"internalpayment",
-										"1902"
+										"106"
 									]
 								}
 							},
