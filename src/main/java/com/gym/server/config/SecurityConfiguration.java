@@ -88,7 +88,7 @@ public class SecurityConfiguration {
                 .csrf().disable() // Disable CSRF protection
                 .authorizeHttpRequests()
                 .requestMatchers(
-                        "/api/v1/auth/**", "/api/otp/**", "/api/v1/demo/**",
+                        "/api/v1/auth/**","/api/v1/user/profile/**", "/api/otp/**", "/api/v1/demo/**",
                         "/api/v1/internalpayment/callback/**"
                 ).permitAll()
                 .anyRequest().authenticated()

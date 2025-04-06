@@ -44,7 +44,7 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<User> authenticatedUser() {
         User currentUser = authenticationService.me();
-        currentUser.setProfile(serverIp+"/api/v1/user/profile?image="+currentUser.getProfile());
+        currentUser.setProfile(currentUser.getProfile());
         return ResponseEntity.ok(currentUser);
     }
 
@@ -85,7 +85,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @PutMapping("/profile")
+    @PutMapping("/upload/profile")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = (User) authentication.getPrincipal();
@@ -123,15 +123,33 @@ public class UserController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
-   @GetMapping("/profile")
-    public ResponseEntity<?> showImage(@RequestParam String image) {
+
+   @GetMapping("/profile/image/{image}")
+    public ResponseEntity<?> showImageByImageName(@PathVariable String image) {
 
         try {
            String base64 = fileService.showProfileBase64(image);
            Map<String,String> res = new HashMap<>();
            res.put("base64",base64);
            return ResponseEntity.ok(res);
+
+        } catch (Exception e) {
+            throw new AppNotFoundException(e.getMessage());
+        }
+    }
+
+
+
+
+    @GetMapping("/profile/id/{id}")
+    public ResponseEntity<?> showImageById(@PathVariable Long id) {
+
+        try {
+            Optional<User> user = userRepository.findById(id);
+            String base64 = fileService.showProfileBase64(user.get().getProfile());
+            Map<String,String> res = new HashMap<>();
+            res.put("base64",base64);
+            return ResponseEntity.ok(res);
 
         } catch (Exception e) {
             throw new AppNotFoundException(e.getMessage());
