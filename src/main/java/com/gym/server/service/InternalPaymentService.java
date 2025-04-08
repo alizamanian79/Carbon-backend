@@ -12,7 +12,7 @@ public interface InternalPaymentService {
     List<?> getAll();
     InternalPayment add(Long req);
     String delete(Long id);
-    Iterable<?> retrieve();
+    List<InternalPayment> retrieve();
     InternalPayment getById(Long id);
 
     // MainActions
@@ -21,4 +21,6 @@ public interface InternalPaymentService {
     InternalPayment getByTransactionId(String transactionId);
     public void isCourseValidate();
     public void callBackDelete(String transactionId);
+
+    InternalPayment decreaseSession() throws Exception;;
 }

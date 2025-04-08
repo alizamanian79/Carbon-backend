@@ -12,12 +12,15 @@ import com.gym.server.model.User;
 import com.gym.server.repository.AccountRepository;
 import com.gym.server.repository.CourseRepository;
 import com.gym.server.repository.InternalPaymentRepository;
+import com.gym.server.repository.UserRepository;
 import com.gym.server.service.AccountService;
 import com.gym.server.service.AuthenticationService;
 import com.gym.server.service.InternalPaymentService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +41,7 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
     private final AccountService accountService;
     private final CourseRepository courseRepository;
     private final AuthenticationService authenticationService;
+    private final UserRepository userRepository;
 
     @Override
     public List<InternalPayment> getAll() {
@@ -88,9 +92,10 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
     }
 
     @Override
-    public Iterable<?> retrieve() {
+    public List<InternalPayment> retrieve() {
         User currentUser = authenticationService.me();
-        return internalPaymentRepository.findByAccountId_Id(currentUser.getAccount().getId());
+        List<InternalPayment> list = new ArrayList<>((Collection) internalPaymentRepository.findByAccountId_Id(currentUser.getAccount().getId()));
+        return list.reversed();
     }
 
     @Override
@@ -186,6 +191,31 @@ public class InternalPaymentServiceImpl implements InternalPaymentService {
         }
     }
 
+
+    @Transactional
+    @Override
+    public InternalPayment decreaseSession() throws Exception {
+        try {
+            LocalDateTime now = LocalDateTime.now();
+            List<InternalPayment> list = retrieve();
+            for (InternalPayment payment : list) {
+                if ("ok".equals(payment.getStatus())) {
+                    if (payment.getRemSessions()-1 ==0 || now.isAfter(payment.getEndedAt())) {
+                        payment.setStatus("expired");
+                        internalPaymentRepository.save(payment);
+                        throw new Exception("دوره منقضی می‌باشد");
+                    }
+                    payment.setRemSessions(payment.getRemSessions() - 1);
+                    internalPaymentRepository.save(payment);
+                    return payment;
+                }
+            }
+            throw new Exception("پرداخت معتبری یافت نشد");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("پرداخت معتبری یافت نشد");
+        }
+    }
 
 
 
