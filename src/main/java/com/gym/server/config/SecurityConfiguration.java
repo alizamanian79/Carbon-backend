@@ -52,7 +52,7 @@ public class SecurityConfiguration {
                 "http://localhost",
                 "http://localhost:80",
                 "http://localhost:3000",
-
+                "http://192.168.11.1:80",
 
                 "https://carbon-b2vh.onrender.com",
                 "https://carbon-b2vh.onrender.com:3000",
@@ -68,6 +68,8 @@ public class SecurityConfiguration {
                 "http://localhost:8081",
                 "http://192.168.1.14:8081",
                 "185.231.115.239:8081",
+                "http://185.231.115.239:8081",
+                "http://zilanmod.ir:8081",
 
                 // Web service apis
                 "https://sandbox.zarinpal.com"
