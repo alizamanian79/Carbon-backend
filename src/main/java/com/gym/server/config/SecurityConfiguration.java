@@ -58,6 +58,7 @@ public class SecurityConfiguration {
                 "http://zilanmod.ir:3000",
 
                 // Servers
+                "http://localhost:8081",
                 "http://185.231.115.239:8081",
                 "http://zilanmod.ir:8081",
 
