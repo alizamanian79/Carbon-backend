@@ -44,32 +44,23 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(
 
-                // Clients
-                "http://192.168.1.14",
-                "http://192.168.1.14:80",
-                "http://192.168.1.14:3000",
-
+                // Client
                 "http://localhost",
                 "http://localhost:80",
                 "http://localhost:3000",
-                "http://192.168.11.1:80",
 
-                "https://carbon-b2vh.onrender.com",
-                "https://carbon-b2vh.onrender.com:3000",
-
+                "http://185.231.115.239",
+                "http://185.231.115.239:80",
+                "http://185.231.115.239:3000",
 
                 "http://zilanmod.ir",
-                "http://zilanmod.ir:3000",
                 "http://zilanmod.ir:80",
-
-                "185.231.115.239:3000",
+                "http://zilanmod.ir:3000",
 
                 // Servers
-                "http://localhost:8081",
-                "http://192.168.1.14:8081",
-                "185.231.115.239:8081",
                 "http://185.231.115.239:8081",
                 "http://zilanmod.ir:8081",
+
 
                 // Web service apis
                 "https://sandbox.zarinpal.com"
