@@ -17,7 +17,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     open-in-view: false
 
 security:
@@ -34,5 +34,5 @@ app:
     paymentEndpoint: https://sandbox.zarinpal.com/pg/v4/payment/request.json #Post (Generate Authority Link)
     paymentUrl: https://sandbox.zarinpal.com/pg/StartPay #Get (Generate Gatewaylink)
     verifyUrl: https://sandbox.zarinpal.com/pg/v4/payment/verify.json #Post (Verify)
-    sucessfullRedirectLink: http://localhost:3000/profile/dashboard
+    successRedirectLink: http://localhost:3000/profile/dashboard
     errorRedirectLink: http://localhost:3000/profile/dashboard

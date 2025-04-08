@@ -29,7 +29,7 @@ public class ResponsePaymentController {
 
 
 
-    @Value("${app.zarinpal.sucessfullRedirectLink}")
+    @Value("${app.zarinpal.successRedirectLink}")
     private String successRedirectLink;
 
     @Value("${app.zarinpal.errorRedirectLink}")
