@@ -26,7 +26,8 @@ security:
     expiration-time: 3600000 # 1h in milliseconds
 
 app:
-  ip: http://zilanmod.ir:${server.port}
+  host: localhost
+  ip: http://${app.host}:${server.port}
   path:
     profileImages: src/main/resources/static/uploads/profileImages
   zarinpal:
@@ -34,5 +35,5 @@ app:
     paymentEndpoint: https://sandbox.zarinpal.com/pg/v4/payment/request.json #Post (Generate Authority Link)
     paymentUrl: https://sandbox.zarinpal.com/pg/StartPay #Get (Generate Gatewaylink)
     verifyUrl: https://sandbox.zarinpal.com/pg/v4/payment/verify.json #Post (Verify)
-    successRedirectLink: http://zilanmod.ir/profile/program
-    errorRedirectLink: http://zilanmod.ir/profile/program
+    successRedirectLink: http://${app.host}/profile/program
+    errorRedirectLink: http://${app.host}/profile/program
