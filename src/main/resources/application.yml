@@ -27,7 +27,7 @@ security:
 
 app:
   host: localhost
-  ip: http://${app.host}:${server.port}
+  ip: http://${app.host}:${server.port} #Server public ip (Call Back )
   path:
     profileImages: src/main/resources/static/uploads/profileImages
   zarinpal:
@@ -35,5 +35,6 @@ app:
     paymentEndpoint: https://sandbox.zarinpal.com/pg/v4/payment/request.json #Post (Generate Authority Link)
     paymentUrl: https://sandbox.zarinpal.com/pg/StartPay #Get (Generate Gatewaylink)
     verifyUrl: https://sandbox.zarinpal.com/pg/v4/payment/verify.json #Post (Verify)
-    successRedirectLink: http://${app.host}/profile/program
-    errorRedirectLink: http://${app.host}/profile/program
+
+    successRedirectLink: http://${app.host}:3000/profile/program #Client public domain
+    errorRedirectLink: http://${app.host}:3000/profile/program #Client public domain

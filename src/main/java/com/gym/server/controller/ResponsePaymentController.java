@@ -23,12 +23,6 @@ public class ResponsePaymentController {
     private String paymentUrl;
 
 
-    @Value("${app.ip}")
-    private String serverIp;
-
-
-
-
     @Value("${app.zarinpal.successRedirectLink}")
     private String successRedirectLink;
 
