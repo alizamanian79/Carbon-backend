@@ -40,7 +40,7 @@ public class InternalPaymentController {
     private String paymentUrl;
 
 
-    @Value("${app.ip}")
+    @Value("${app.serverHost}")
     private String serverIp;
 
 

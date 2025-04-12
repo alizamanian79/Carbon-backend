@@ -33,7 +33,7 @@ public class UserController {
     @Value("${app.path.profileImages}")
     private String profileImages;
 
-    @Value("${app.ip}")
+    @Value("${app.serverHost}")
     private String serverIp;
 
     private final UserService userService;
@@ -69,7 +69,7 @@ public class UserController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/role/set")
     public ResponseEntity<User> setRole(@RequestBody RoleDto role) {
         User users = userService.setRole(role);

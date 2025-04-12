@@ -26,8 +26,8 @@ security:
     expiration-time: 3600000 # 1h in milliseconds
 
 app:
-  host: localhost
-  ip: http://${app.host}:${server.port} #Server public ip (Call Back )
+  clientDomain: http://192.168.1.14:3000
+  serverHost: http://192.168.1.14:${server.port}
   path:
     profileImages: src/main/resources/static/uploads/profileImages
   zarinpal:
@@ -36,5 +36,5 @@ app:
     paymentUrl: https://sandbox.zarinpal.com/pg/StartPay #Get (Generate Gatewaylink)
     verifyUrl: https://sandbox.zarinpal.com/pg/v4/payment/verify.json #Post (Verify)
 
-    successRedirectLink: http://${app.host}:3000/profile/program #Client public domain
-    errorRedirectLink: http://${app.host}:3000/profile/program #Client public domain
+    successRedirectLink: ${app.clientDomain}/profile/program #Client public domain
+    errorRedirectLink: ${app.clientDomain}/profile/program #Client public domain
