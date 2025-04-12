@@ -171,7 +171,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"phoneNumber\": \"09917403980\",\r\n    \"password\": \"mahdi\",\r\n    \"email\": \"mahdi@gmail.com\", // Ekhtiari\r\n    \"fullName\": \"mahdi\" // Ekhtiari\r\n\r\n}",
+									"raw": "{\r\n    \"phoneNumber\": \"09384289604\",\r\n    \"password\": \"mahdi\",\r\n    \"email\": \"mahdi@gmail.com\", // Ekhtiari\r\n    \"fullName\": \"mahdi\" // Ekhtiari\r\n\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -504,7 +504,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\":1,\r\n \"roles\": [\r\n        \"USER\",\"ADMIN\"\r\n    ]\r\n}",
+									"raw": "{\r\n    \"id\":1,\r\n \"roles\": [\r\n    \"USER\",\r\n    \"ADMIN\"\r\n    ]\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -655,7 +655,7 @@
 									"formdata": []
 								},
 								"url": {
-									"raw": "{{HOST}}/api/v1/user/profile/image/f95e8303-f044-4981-a698-61b5b4eebefc.jpg",
+									"raw": "{{HOST}}/api/v1/user/profile/image/27bd759d-03bc-4e73-9615-21301f3cd631.jpg",
 									"host": [
 										"{{HOST}}"
 									],
@@ -665,7 +665,7 @@
 										"user",
 										"profile",
 										"image",
-										"f95e8303-f044-4981-a698-61b5b4eebefc.jpg"
+										"27bd759d-03bc-4e73-9615-21301f3cd631.jpg"
 									]
 								}
 							},
@@ -993,7 +993,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"برنز\",\r\n    \"description\":\"حسین اقایی\",\r\n    \"amount\": 3500000,\r\n    \"sessions\":22,\r\n    \"discount\":0,\r\n    \"period\":10\r\n}",
+							"raw": "{\r\n    \"title\":\"نقره ای \",\r\n    \"description\":\"حسین شمس\",\r\n    \"amount\": 2000000,\r\n    \"sessions\":16,\r\n    \"discount\":0,\r\n    \"period\":30\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1031,7 +1031,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":152,\r\n    \"title\":\"دوره طلایی2\",\r\n    \"description\":\"جدید\",\r\n    \"amount\":2000000,\r\n    \"sessions\":30,\r\n    \"discount\":10,\r\n    \"period\":30\r\n}",
+							"raw": "{\r\n    \"id\":152,\r\n    \"title\":\"دوره طلایی2\",\r\n    \"description\":\"جدید\",\r\n    \"amount\":2000000,\r\n    \"sessions\":22,\r\n    \"discount\":0,\r\n    \"period\":30\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1068,7 +1068,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{HOST}}/api/v1/course/2",
+							"raw": "{{HOST}}/api/v1/course/152",
 							"host": [
 								"{{HOST}}"
 							],
@@ -1076,7 +1076,7 @@
 								"api",
 								"v1",
 								"course",
-								"2"
+								"152"
 							]
 						}
 					},
@@ -1391,7 +1391,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/v1/internalpayment/106",
+									"raw": "{{HOST}}/api/v1/internalpayment/802",
 									"host": [
 										"{{HOST}}"
 									],
@@ -1399,7 +1399,7 @@
 										"api",
 										"v1",
 										"internalpayment",
-										"106"
+										"802"
 									]
 								}
 							},
@@ -1430,6 +1430,36 @@
 										"v1",
 										"internalpayment",
 										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Using course",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/v1/internalpayment/use",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"internalpayment",
+										"use"
 									]
 								}
 							},
