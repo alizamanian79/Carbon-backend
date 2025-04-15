@@ -19,6 +19,10 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Create application.yml
+        run: |
+          echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application-product.yml
+
       - name: Build with Maven
         run: mvn clean install -U
 
@@ -27,5 +31,7 @@ jobs:
           cd 
 
       - name: Restart application with PM2
-        run: cd /home/ali/carbon-backend/_work/Carbon-backend/Carbon-backend/target/
-      - run: pm2 restart 12
+        run: |
+          pm2 delete zilanmod-server || true
+          pm2 start "java -jar /home/ali/myapp/app.jar" --name zilanmod-server
+
