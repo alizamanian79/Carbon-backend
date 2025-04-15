@@ -41,7 +41,7 @@ public class InternalPaymentController {
 
 
     @Value("${app.serverHost}")
-    private String serverIp;
+    private String serverHost;
 
 
 
@@ -151,7 +151,7 @@ public class InternalPaymentController {
         req.setMobile(findUser.getPhoneNumber());
         req.setEmail(findUser.getEmail());
 
-        PaymentResponseDto response= zarinpalService.paymentRequest(req,serverIp+"/api/v1/internalpayment/callback/"+res.getTransactionId(),"پرداخت شهریه");
+        PaymentResponseDto response= zarinpalService.paymentRequest(req,serverHost+"/api/v1/internalpayment/callback/"+res.getTransactionId(),"پرداخت شهریه");
         String link = paymentUrl+"/"+response.getData().getAuthority().toString();
         Map<String,Object> map = new HashMap<>();
         map.put("message","لینک درگاه با موفقیت ایجاد شد");
