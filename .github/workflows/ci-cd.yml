@@ -24,7 +24,7 @@ jobs:
 
     - name: Build with Maven
       run: mvn clean install
-#
-#    - name: Change Directory
-#      run: cd /home/ali/carbon-backend/_work/Carbon-backend/Carbon-backend/target/
-#    - run: pm2 restart 4
+
+    - name: Change Directory
+      run: cd /home/ali/carbon-backend/_work/Carbon-backend/Carbon-backend/target/
+    - run: pm2 restart 5
