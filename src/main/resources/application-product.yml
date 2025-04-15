@@ -4,7 +4,7 @@ server:
 
 spring:
   profiles:
-    active: developer
+    active: product
   servlet:
     multipart:
       max-file-size: 10MB
@@ -28,8 +28,8 @@ security:
     expiration-time: 3600000 # 1h in milliseconds
 
 app:
-  clientDomain: http://192.168.1.14:3000
-  serverHost: http://192.168.1.14:${server.port}
+  clientDomain: http://zilanmod.ir:80
+  serverHost: http://185.231.115.239:${server.port}
   path:
     profileImages: src/main/resources/static/uploads/profileImages
   zarinpal:
