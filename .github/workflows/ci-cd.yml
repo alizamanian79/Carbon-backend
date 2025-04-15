@@ -19,18 +19,12 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-        env:
-          echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application-product.yml
-
       - name: Build with Maven
         run: mvn clean install -U
-
-      - name: Copy built jar to deployment folder
-        run: |
-          mkdir -p /home/ali/myapp
-          cp target/*.jar /home/ali/myapp/app.jar
+        working-directory: /home/ali/carbon-backend/_work/Carbon-backend/Carbon-backend
 
       - name: Restart application with PM2
         run: |
           pm2 delete zilanmod-server || true
-          pm2 start "java -jar /home/ali/myapp/app.jar" --name zilanmod-server
+          pm2 start "java -jar target/*.jar --spring.profiles.active=product" --name zilanmod-server
+        working-directory: /home/ali/carbon-backend/_work/Carbon-backend/Carbon-backend
