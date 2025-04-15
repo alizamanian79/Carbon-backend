@@ -19,14 +19,13 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Create application.yml
-        run: |
+        env:
           echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application-product.yml
 
       - name: Build with Maven
         run: mvn clean install -U
 
-      - name: Change directory
+      - name: Copy built jar to deployment folder
         run: |
           mkdir -p /home/ali/myapp
           cp target/*.jar /home/ali/myapp/app.jar
@@ -35,4 +34,3 @@ jobs:
         run: |
           pm2 delete zilanmod-server || true
           pm2 start "java -jar /home/ali/myapp/app.jar" --name zilanmod-server
-
