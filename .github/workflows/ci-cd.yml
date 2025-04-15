@@ -9,22 +9,29 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        cache: maven
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
 
-    - name: Create application.yml
-      run: |
-        echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application-product.yml
+      - name: Create application.yml
+        run: |
+          echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application-product.yml
 
-    - name: Build with Maven
-      run: mvn clean install
+      - name: Build with Maven
+        run: mvn clean install -U
 
-    - name: Change Directory
-      run: cd /home/ali/carbon-backend/_work/Carbon-backend/Carbon-backend/target/
-    - run: pm2 restart 5
+      - name: Copy built jar to deployment folder
+        run: |
+          mkdir -p /home/ali/myapp
+          cp target/*.jar /home/ali/myapp/app.jar
+
+      - name: Restart application with PM2
+        run: |
+          pm2 delete zilanmod-server || true
+          pm2 start "java -jar /home/ali/myapp/app.jar" --name zilanmod-server
