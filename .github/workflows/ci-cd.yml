@@ -35,3 +35,4 @@ jobs:
         run: |
           pm2 delete zilanmod-server || true
           pm2 start "java -jar /home/ali/myapp/app.jar" --name zilanmod-server
+
