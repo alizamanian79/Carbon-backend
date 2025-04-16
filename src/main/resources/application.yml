@@ -4,7 +4,7 @@ server:
 
 spring:
   profiles:
-    active: developer
+    active: develop
   servlet:
     multipart:
       max-file-size: 10MB
@@ -40,6 +40,3 @@ app:
 
     successRedirectLink: ${app.clientDomain}/profile/program #Client public domain
     errorRedirectLink: ${app.clientDomain}/profile/program #Client public domain
-
-
-
