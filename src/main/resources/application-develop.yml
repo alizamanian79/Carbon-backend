@@ -28,8 +28,8 @@ security:
     expiration-time: 3600000 # 1h in milliseconds
 
 app:
-  clientDomain: http://zilanmod.ir:80
-  serverHost: http://185.231.115.239:${server.port}
+  clientDomain: http://zilanmod.ir
+  serverHost: http://zilanmod.ir:${server.port}
   path:
     profileImages: src/main/resources/static/uploads/profileImages
   zarinpal:
