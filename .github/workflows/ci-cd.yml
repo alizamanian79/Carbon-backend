@@ -29,3 +29,5 @@ jobs:
 #          pm2 start "java -jar target/*.jar --spring.profiles.active=product" --name zilanmod-server
           pm2 start "java -jar target/*.jar --spring.profiles.active=product" --name zilanmod-server
         working-directory: /home/ali/carbon-backend/_work/Carbon-backend/Carbon-backend
+
+ 
