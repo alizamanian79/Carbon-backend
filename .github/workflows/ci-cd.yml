@@ -24,7 +24,5 @@ jobs:
         working-directory: /home/ali/carbon-backend/_work/Carbon-backend/Carbon-backend
 
       - name: Restart application with PM2
-        run: |
-          pm2 delete zilanmod-server || true
-          pm2 start "java -jar target/*.jar" --name zilanmod-server
-        working-directory: /home/ali/carbon-backend/_work/Carbon-backend/Carbon-backend
+        run: cd /target
+      - run: pm2 restart zilanmod-server
