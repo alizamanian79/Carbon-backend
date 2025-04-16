@@ -25,8 +25,8 @@ security:
     expiration-time: 3600000 # 1h in milliseconds
 
 app:
-  clientDomain: http://zilanmod.ir
-  serverHost: http://zilanmod.ir:${server.port}
+  clientDomain: http://localhost:3000
+  serverHost: http://192.168.1.14:${server.port}
   path:
     profileImages: src/main/resources/static/uploads/profileImages
   zarinpal:
@@ -37,4 +37,3 @@ app:
 
     successRedirectLink: ${app.clientDomain}/profile/program #Client public domain
     errorRedirectLink: ${app.clientDomain}/profile/program #Client public domain
-
