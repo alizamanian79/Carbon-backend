@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
+@RestController
+@RequestMapping("/api/v1/demo")
 public class DemoController {
 
 //
@@ -36,7 +38,12 @@ public class DemoController {
 //    }
 
 
-    @RequestMapping("/api/v1/demo")
+    @GetMapping("/test")
+    public String hello() {
+        return "خوش گلدین";
+    }
+
+    @GetMapping("/page")
     public String hello(Model model) {
         model.addAttribute("message", "سلام، خوش آمدید!");
         return "hello"; // نام فایل HTML بدون پسوند
