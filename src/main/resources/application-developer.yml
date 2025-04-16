@@ -1,0 +1,42 @@
+server:
+  port: 8081
+  address: 0.0.0.0
+
+spring:
+  profiles:
+    active: product
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  task:
+    scheduling:
+      enabled: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/testdb
+    username: root
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+security:
+  jwt:
+    secret-key: 5a3e8f1c2b4d6e7f8a9b0c1d2e3f4g5h6i7j8k9l0m1n2o3p4q5r6s7t8u9v0w1
+    expiration-time: 3600000 # 1h in milliseconds
+
+app:
+  clientDomain: http://localhost:3000
+  serverHost: http://192.168.1.14:${server.port}
+  path:
+    profileImages: src/main/resources/static/uploads/profileImages
+  zarinpal:
+    merchantId: 7d0f5d8b-bc21-4d0b-ad94-45b591aab2a2
+    paymentEndpoint: https://sandbox.zarinpal.com/pg/v4/payment/request.json #Post (Generate Authority Link)
+    paymentUrl: https://sandbox.zarinpal.com/pg/StartPay #Get (Generate Gatewaylink)
+    verifyUrl: https://sandbox.zarinpal.com/pg/v4/payment/verify.json #Post (Verify)
+
+    successRedirectLink: ${app.clientDomain}/profile/program #Client public domain
+    errorRedirectLink: ${app.clientDomain}/profile/program #Client public domain
