@@ -28,7 +28,7 @@ security:
     expiration-time: 3600000 # 1h in milliseconds
 
 app:
-  clientDomain: http://192.168.1.14:3000
+  clientDomain: http://localhost:3000
   serverHost: http://192.168.1.14:${server.port}
   path:
     profileImages: src/main/resources/static/uploads/profileImages
